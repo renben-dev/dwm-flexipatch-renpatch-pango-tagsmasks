@@ -7,7 +7,8 @@ width_pwrl_tags(Bar *bar, BarArg *a)
 	Client *c;
 	unsigned int occ = 0;
 	for (c = bar->mon->clients; c; c = c->next)
-		occ |= c->tags == 255 ? 0 : c->tags;
+		//occ |= c->tags == 255 ? 0 : c->tags;
+		occ |= c->tags == TAGMASK ? 0 : c->tags; //renzo correction to git
 	#endif // BAR_HIDEVACANTTAGS_PATCH
 
 	for (w = 0, i = 0; i < NUMTAGS; i++) {
@@ -15,7 +16,12 @@ width_pwrl_tags(Bar *bar, BarArg *a)
 		if (!(occ & 1 << i || bar->mon->tagset[bar->mon->seltags] & 1 << i))
 			continue;
 		#endif // BAR_HIDEVACANTTAGS_PATCH
+
+		#if BAR_PANGO_PATCH // renzo
+		w += TEXTWM(tagicon(bar->mon, i)) + plw;
+		#else
 		w += TEXTW(tagicon(bar->mon, i)) + plw;
+		#endif // BAR_PANGO_PATCH
 	}
 	return w + lrpad;
 }
@@ -33,7 +39,8 @@ draw_pwrl_tags(Bar *bar, BarArg *a)
 
 	for (c = bar->mon->clients; c; c = c->next) {
 		#if BAR_HIDEVACANTTAGS_PATCH
-		occ |= c->tags == 255 ? 0 : c->tags;
+		//occ |= c->tags == 255 ? 0 : c->tags;
+		occ |= c->tags == TAGMASK ? 0 : c->tags; //renzo correction to git
 		#else
 		occ |= c->tags;
 		#endif // BAR_HIDEVACANTTAGS_PATCH
@@ -51,7 +58,13 @@ draw_pwrl_tags(Bar *bar, BarArg *a)
 
 		icon = tagicon(bar->mon, i);
 		invert = 0;
+
+		#if BAR_PANGO_PATCH // renzo
+		w = TEXTWM(icon);
+		#else
 		w = TEXTW(icon);
+		#endif // BAR_PANGO_PATCH		
+
 		if (urg & 1 << i) {
 			drw_settrans(drw, prevscheme, (nxtscheme = scheme[bar->mon->tagset[bar->mon->seltags] & 1 << i ? SchemeSel : SchemeUrg]));
 		} else {
@@ -89,7 +102,8 @@ click_pwrl_tags(Bar *bar, Arg *arg, BarArg *a)
 	Client *c;
 	unsigned int occ = 0;
 	for (c = bar->mon->clients; c; c = c->next)
-		occ |= c->tags == 255 ? 0 : c->tags;
+		//occ |= c->tags == 255 ? 0 : c->tags;
+		occ |= c->tags == TAGMASK ? 0 : c->tags; //renzo correction to git
 	#endif // BAR_HIDEVACANTTAGS_PATCH
 
 	do {
@@ -97,7 +111,12 @@ click_pwrl_tags(Bar *bar, Arg *arg, BarArg *a)
 		if (!(occ & 1 << i || bar->mon->tagset[bar->mon->seltags] & 1 << i))
 			continue;
 		#endif // BAR_HIDEVACANTTAGS_PATCH
+
+		#if BAR_PANGO_PATCH // 	renzo
+		x += TEXTWM(tagicon(bar->mon, i)) + plw;
+		#else
 		x += TEXTW(tagicon(bar->mon, i)) + plw;
+		#endif // BAR_PANGO_PATCH
 	} while (a->x >= x && ++i < NUMTAGS);
 	if (i < NUMTAGS) {
 		arg->ui = 1 << i;
@@ -130,7 +149,8 @@ hover_pwrl_tags(Bar *bar, BarArg *a, XMotionEvent *ev)
 	Client *c;
 	unsigned int occ = 0;
 	for (c = bar->mon->clients; c; c = c->next)
-		occ |= c->tags == 255 ? 0 : c->tags;
+		//occ |= c->tags == 255 ? 0 : c->tags;
+		occ |= c->tags == TAGMASK ? 0 : c->tags; //renzo correction to git
 	#endif // BAR_HIDEVACANTTAGS_PATCH
 
 	do {
@@ -138,7 +158,12 @@ hover_pwrl_tags(Bar *bar, BarArg *a, XMotionEvent *ev)
 		if (!(occ & 1 << i || bar->mon->tagset[bar->mon->seltags] & 1 << i))
 			continue;
 		#endif // BAR_HIDEVACANTTAGS_PATCH
+		
+		#if BAR_PANGO_PATCH // 	renzo
+		x += TEXTWM(tagicon(bar->mon, i)) + plw;
+		#else
 		x += TEXTW(tagicon(bar->mon, i)) + plw;
+		#endif // BAR_PANGO_PATCH
 	} while (a->x >= x && ++i < NUMTAGS);
 
 	if (i < NUMTAGS) {

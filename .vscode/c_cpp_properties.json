@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include",
+                "/usr/include/x86_64-linux-gnu",
+                "/usr/include/X11",
+                "/usr/include/freetype2",
+                "/usr/include/pango-1.0",
+                "/usr/include/glib-2.0",
+                "/usr/lib/x86_64-linux-gnu/glib-2.0/include",
+                "/usr/include/harfbuzz"
+            ],
+            "defines": [
+                "_POSIX_C_SOURCE=200809L",
+                "_GNU_SOURCE",
+                "_DEFAULT_SOURCE",
+                "_BSD_SOURCE",
+                "_XOPEN_SOURCE=700L",
+                "VERSION=\"6.5\"",
+                "XINERAMA"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

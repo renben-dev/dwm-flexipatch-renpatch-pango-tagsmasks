@@ -6,9 +6,15 @@ VERSION = 6.8
 # paths
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
+# start : renzo to take into account modern library locations
+# primary paths (actual current system paths)
+X11INC = /usr/include/X11
+X11LIB = /usr/lib
 
-X11INC = /usr/X11R6/include
-X11LIB = /usr/X11R6/lib
+# fallback paths (old or alternate)
+X11INC_FALLBACK = /usr/X11R6/include
+X11LIB_FALLBACK = /usr/X11R6/lib
+# end : renzo to take into account modern library locations
 
 # FreeBSD (uncomment)
 #X11INC = /usr/local/include
@@ -29,14 +35,14 @@ FREETYPEINC = /usr/include/freetype2
 #KVMLIB = -lkvm
 
 # Uncomment this for the alpha patch and the winicon patch (BAR_ALPHA_PATCH, BAR_WINICON_PATCH)
-#XRENDER = -lXrender
+XRENDER = -lXrender #renzo uncommented
 
 # Uncomment this for the mdpcontrol patch / MDPCONTROL_PATCH
 #MPDCLIENT = -lmpdclient
 
 # Uncomment for the pango patch / BAR_PANGO_PATCH
-#PANGOINC = `pkg-config --cflags xft pango pangoxft`
-#PANGOLIB = `pkg-config --libs xft pango pangoxft`
+PANGOINC = `pkg-config --cflags xft pango pangoxft`
+PANGOLIB = `pkg-config --libs xft pango pangoxft`
 
 # Uncomment for the ipc patch / IPC_PATCH
 #YAJLLIBS = -lyajl
@@ -49,7 +55,7 @@ FREETYPEINC = /usr/include/freetype2
 #XCBLIBS = -lX11-xcb -lxcb -lxcb-res
 
 # This is needed for the winicon and tagpreview patches / BAR_WINICON_PATCH / BAR_TAGPREVIEW_PATCH
-#IMLIB2LIBS = -lImlib2
+IMLIB2LIBS = -lImlib2 #renzo uncommented, was commented
 
 # Uncomment for the banish patch / BANISH_PATCH (for mouse related features)
 #XILIB = `pkg-config --libs xi xfixes`
@@ -58,9 +64,16 @@ FREETYPEINC = /usr/include/freetype2
 #BDINC = `pkg-config --cflags fribidi`
 #BDLIBS = `pkg-config --libs fribidi`
 
+# start: renzo: to account for modern library locations, also included -I. to help clangd or intellisense detection
 # includes and libs
+<<<<<<< HEAD
 INCS = -I${X11INC} -I${FREETYPEINC} ${YAJLINC} ${PANGOINC} ${BDINC}
 LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}  ${XRENDER} ${MPDCLIENT} ${XEXTLIB} ${XCBLIBS} ${KVMLIB} ${PANGOLIB} ${YAJLLIBS} ${IMLIB2LIBS} $(BDLIBS) $(XILIB)
+=======
+INCS = -I. -I${X11INC} -I${X11INC_FALLBACK} -I${FREETYPEINC} ${YAJLINC} ${PANGOINC} ${BDINC}
+LIBS = -L${X11LIB} -L${X11LIB_FALLBACK} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}  ${XRENDER} ${MPDCLIENT} ${XEXTLIB} ${XCBLIBS} ${KVMLIB} ${PANGOLIB} ${YAJLLIBS} ${IMLIB2LIBS} $(BDLIBS)
+# end: renzo: to account for modern library locations
+>>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 
 # flags
 CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}

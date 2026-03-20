@@ -11,7 +11,8 @@ nametag(const Arg *arg)
 	int occ = 0;
 
 	for (c = m->clients; c; c = c->next)
-		occ |= c->tags == 255 ? 0 : c->tags;
+		//occ |= c->tags == 255 ? 0 : c->tags;
+		occ |= c->tags == TAGMASK ? 0 : c->tags; //renzo correction to git
 	#endif // BAR_ALTTAGSDECORATION_PATCH
 
 	errno = 0; // popen(3p) says on failure it "may" set errno

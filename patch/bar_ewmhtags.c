@@ -10,7 +10,12 @@ setdesktopnames(void)
 {
 	int i;
 	XTextProperty text;
-	char *tags[NUMTAGS];
+	#if BAR_PANGO_PATCH //renzo
+	const char *
+	#else
+	char *
+	#endif // BAR_PANGO_PATCH
+	tags[NUMTAGS];
 	for (i = 0; i < NUMTAGS; i++)
 		tags[i] = tagicon(selmon, i);
 	Xutf8TextListToTextProperty(dpy, tags, NUMTAGS, XUTF8StringStyle, &text);

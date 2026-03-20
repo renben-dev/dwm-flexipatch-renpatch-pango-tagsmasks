@@ -111,7 +111,7 @@ drawpowerlinestatus(int xpos, char *stext, BarArg *barg)
 		}
 	}
 	if (bp != '|') {
-		drw_settrans(drw, prevscheme, scheme[SchemeNorm]);
+		drw_settrans(drw, prevscheme, scheme[SchemeNorm]); //renzo here
 		drw_arrow(drw, x - plw, barg->y, plw, barg->h, bp == '\\' || bp == '>' ? 1 : 0, bp == '<' ? 0 : 1);
 		drw_rect(drw, x - 2 * plw, barg->y, plw, barg->h, 1, 1);
 		x -= plw * 2;

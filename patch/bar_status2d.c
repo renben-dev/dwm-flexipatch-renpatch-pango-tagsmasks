@@ -83,6 +83,7 @@ drawstatusbar(BarArg *a, char* stext)
 	char *text;
 	char *p;
 	Clr oldbg, oldfg;
+
 	len = strlen(stext);
 	if (!(text = (char*) malloc(sizeof(char)*(len + 1))))
 		die("malloc");

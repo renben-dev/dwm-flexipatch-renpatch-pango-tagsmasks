@@ -1,0 +1,20 @@
+{
+  "files.associations": {
+    "array": "cpp",
+    "string_view": "cpp",
+    "initializer_list": "cpp",
+    "span": "cpp",
+    "format": "cpp",
+    "random": "c",
+    "patches.h": "c",
+    "cstdlib": "c",
+    "xf86keysym.h": "c",
+    "sstream": "c",
+    "focusadjacenttag.h": "c"
+  },
+  "C_Cpp.errorSquiggles": "enabled",
+  "C_Cpp.intelliSenseEngine": "default",
+  "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+  "C_Cpp.dimInactiveRegions": false
+    
+}

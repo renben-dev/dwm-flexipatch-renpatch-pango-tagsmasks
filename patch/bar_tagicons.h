@@ -4,5 +4,11 @@ enum {
 	ALT_TAGS_DECORATION,
 };
 
-static char * tagicon(Monitor *m, int tag);
+static 
+#if BAR_PANGO_PATCH //renzo
+const char *
+#else
+char *
+#endif //BAR_PANGO_PATCH
+tagicon(Monitor *m, int tag);
 

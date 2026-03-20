@@ -6,9 +6,15 @@
 #if BAR_ALPHA_PATCH
 #include "bar_alpha.c"
 #endif
-#if BAR_ALTERNATIVE_TAGS_PATCH
+
+#if BAR_TAG_MULTI_ICONS_RENBEN_PATCH
+#include "bar_tag_multi_icons_renben.c"
+#elif NAMETAG_PATCH
+#include "nametag.c"
+#elif BAR_ALTERNATIVE_TAGS_PATCH
 #include "bar_alternativetags.c"
 #endif
+
 #if BAR_ANYBAR_PATCH
 #include "bar_anybar.c"
 #endif
@@ -217,9 +223,6 @@
 #if MOVESTACK_PATCH
 #include "movestack.c"
 #endif
-#if NAMETAG_PATCH
-#include "nametag.c"
-#endif
 #if NO_MOD_BUTTONS_PATCH
 #include "nomodbuttons.c"
 #endif
@@ -418,4 +421,8 @@
 #if TILE_LAYOUT
 #include "layout_tile.c"
 #endif
+#if BAR_TAG_NUM_CLIENTS_INDICATOR_RENBEN_PATCH
+#include "bar_number_of_clients_indicator.c"
+#endif
+
 

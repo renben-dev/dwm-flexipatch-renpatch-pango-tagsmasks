@@ -200,7 +200,7 @@ flextitledraw(Monitor *m, Client *c, int unused, int x, int w, int tabscheme, Ar
 		: tabscheme
 	);
 
-	drw_setscheme(drw, scheme[clientscheme]);
+	drw_setscheme(drw, scheme[clientscheme]); // renzo here
 	XSetWindowBorder(dpy, c->win, scheme[clientscheme][ColBorder].pixel);
 
 	if (w <= TEXTW("A") - lrpad + tpad) // reduce text padding if wintitle is too small

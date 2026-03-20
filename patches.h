@@ -19,7 +19,7 @@
  * Awesomebar takes precedence over fancybar.
  * https://dwm.suckless.org/patches/awesomebar/
  */
-#define BAR_AWESOMEBAR_PATCH 0
+#define BAR_AWESOMEBAR_PATCH 0 //renzo maybe
 
 /* This patch depends on statuscmd patch and adds integration with a (patched)
  * dwmblocks instance to give a clickable status bar. One must not necessarily
@@ -84,9 +84,6 @@
 /* Show layout symbol in bar */
 #define BAR_LTSYMBOL_PATCH 1
 
-/* Adds a colour schme for the layout symbol */
-#define BAR_LTSYMBOL_SCHEME_PATCH 0
-
 /* Adds powerline arrows for the status.
  * This uses statuscolors logic for choosing colors for the powerline. As these markers
  * are also control characters there is no explicit statuscmd support for this patch.
@@ -116,7 +113,7 @@
 /* This patch turns the titlebar area into a mfact-respecting tabbar showing each client's title.
  * https://dwm.suckless.org/patches/bartabgroups/
  */
-#define BAR_TABGROUPS_PATCH 0
+#define BAR_TABGROUPS_PATCH 0 //maybe
 
 /* This patch adds an option to place tags in rows like in many other window managers.
  * https://dwm.suckless.org/patches/taggrid/
@@ -138,7 +135,7 @@
  *
  * https://dwm.suckless.org/patches/tag-previews/
  */
-#define BAR_TAGPREVIEW_PATCH 0
+#define BAR_TAGPREVIEW_PATCH 0 //renzo maybe
 
 /* Show status in bar */
 #define BAR_STATUS_PATCH 1
@@ -159,7 +156,7 @@
  * This patch is incompatible with the extrabar patch.
  * https://dwm.suckless.org/patches/status2d/
  */
-#define BAR_STATUS2D_PATCH 0
+#define BAR_STATUS2D_PATCH 1 //renzo 1 was 0
 
 /* Supplementary patch should you want to disable alpha for the status2d section */
 #define BAR_STATUS2D_NO_ALPHA_PATCH 0
@@ -175,10 +172,10 @@
 /* The systray patch adds systray for the status bar.
  * https://dwm.suckless.org/patches/systray/
  */
-#define BAR_SYSTRAY_PATCH 0
+#define BAR_SYSTRAY_PATCH 1 //renzo 1 was 0
 
 /* Show tag symbols in the bar. */
-#define BAR_TAGS_PATCH 1
+#define BAR_TAGS_PATCH 1 //must be 1
 
 /* Show tag symbols + class of master window in the bar.
  * https://dwm.suckless.org/patches/taglabels/
@@ -188,7 +185,7 @@
 /* This patch underlines the selected tag, or optionally all tags.
  * https://dwm.suckless.org/patches/underlinetags/
  */
-#define BAR_UNDERLINETAGS_PATCH 0
+#define BAR_UNDERLINETAGS_PATCH 1 //renzo 1 was 0
 
 /* This patch adds the window icon next to the window title in the bar.
  *
@@ -206,7 +203,7 @@
  * https://github.com/AdamYuan/dwm-winicon
  * https://dwm.suckless.org/patches/winicon
  */
-#define BAR_WINICON_PATCH 0
+#define BAR_WINICON_PATCH 1 //renzo 1 was 0
 
 /* Show window title in bar */
 #define BAR_WINTITLE_PATCH 1
@@ -257,19 +254,22 @@
  * when including this patch.
  * https://dwm.suckless.org/patches/alpha/
  */
-#define BAR_ALPHA_PATCH 0
+/*renzo:from the alpha patch creator comments:
+Fix transparent borders
+By default dwm might make windows' borders transparent when using composit window manager (e.g. xcompmgr, picom). Alpha patch allows to make borders opaque.*/
+#define BAR_ALPHA_PATCH 1 //renzo 1, was 0
 
 /* This patch introduces alternative tags which can be switched on the fly for the
  * sole purpose of providing visual aid.
  * https://dwm.suckless.org/patches/alternativetags/
  */
-#define BAR_ALTERNATIVE_TAGS_PATCH 0
+#define BAR_ALTERNATIVE_TAGS_PATCH 1 //renzo 1 original 0
 
 /* This patches provides the ability to use alternative text for tags which contain at
  * least one window.
  * https://dwm.suckless.org/patches/alttagsdecoration/
  */
-#define BAR_ALTTAGSDECORATION_PATCH 0
+#define BAR_ALTTAGSDECORATION_PATCH 0 //reno never, never
 
 /* This patch enables dwm to manage external status bars such as lemonbar and polybar.
  * dwm treats the external bar as it would its own, so all regular dwm commands such as
@@ -292,12 +292,6 @@
  * https://codemadness.org/paste/dwm-border-bar.patch
  */
 #define BAR_BORDER_PATCH 0
-
-/* Optional addon for the border patch. This makes it so that the bar border is drawn using
- * the background colour of the bar as opposed to the border colour. This allows for the
- * border to have the same transparency as the background thus giving a more uniform look.
- */
-#define BAR_BORDER_COLBG_PATCH 0
 
 /* This patch centers the WM_NAME of the currently selected window on the status bar.
  * This is compatible with the wintitle, bartabgroups, flexwintitle and awesomebar bar
@@ -345,7 +339,7 @@
 /* Allows the bar height to be explicitly set rather than being derived from font.
  * https://dwm.suckless.org/patches/bar_height/
  */
-#define BAR_HEIGHT_PATCH 0
+#define BAR_HEIGHT_PATCH 1 // renzo 1 original 0
 
 /* This patch prevents dwm from drawing tags with no clients (i.e. vacant) on the bar.
  * https://dwm.suckless.org/patches/hide_vacant_tags/
@@ -363,31 +357,31 @@
  * https://groups.google.com/forum/m/#!topic/wmii/7bncCahYIww
  * https://docs.google.com/viewer?a=v&pid=forums&srcid=MDAwODA2MTg0MDQyMjE0OTgzMzMBMDQ3ODQzODkyMTU3NTAyMTMxNTYBX2RUMVNtOUtDQUFKATAuMQEBdjI&authuser=0
  */
-#define BAR_IGNORE_XFT_ERRORS_WHEN_DRAWING_TEXT_PATCH 0
+#define BAR_IGNORE_XFT_ERRORS_WHEN_DRAWING_TEXT_PATCH 1 //renzo 1 , basically needed
 
 /* This patch adds back in the workaround for a BadLength error in the Xft library when color
  * glyphs are used. This is for systems that do not have an updated version of the Xft library
  * (or generally prefer monochrome fonts).
  */
-#define BAR_NO_COLOR_EMOJI_PATCH 0
+#define BAR_NO_COLOR_EMOJI_PATCH 0 //renzo maybe
 
 /* This patch adds vertical and horizontal space between the statusbar and the edge of the screen.
  * https://dwm.suckless.org/patches/barpadding/
  */
-#define BAR_PADDING_PATCH 0
+#define BAR_PADDING_PATCH 1 //renzo 1 was 0 
 
 /* Same as barpadding patch but specifically tailored for the vanitygaps patch in that the outer
  * bar padding is derived from the vanitygaps settings. In addition to this the bar padding is
  * toggled in unison when vanitygaps are toggled. Increasing or decreasing gaps during runtime
  * will not affect the bar padding.
  */
-#define BAR_PADDING_VANITYGAPS_PATCH 0
+#define BAR_PADDING_VANITYGAPS_PATCH 0 //renzo maybe
 
 /* Smart bar padding patch that automatically adjusts the padding when there is
  * only one client on the monitor. Works well with vanitygaps and barpadding
  * patches.
  */
-#define BAR_PADDING_SMART_PATCH 0
+#define BAR_PADDING_SMART_PATCH 0 //renzo maybe
 
 /* This patch adds simple markup for status messages using pango markup.
  * This depends on the pango library v1.44 or greater.
@@ -408,7 +402,7 @@
  * https://lists.suckless.org/hackers/2004/17285.html
  * https://dwm.suckless.org/patches/pango/
  */
-#define BAR_PANGO_PATCH 0
+#define BAR_PANGO_PATCH 1
 
 /* This patch allows the status text to be fixed to the bar on a specific
  * monitor rather than being drawn on the focused monitor.
@@ -420,7 +414,7 @@
 /* This patch draws and updates the statusbar on all monitors.
  * https://dwm.suckless.org/patches/statusallmons/
  */
-#define BAR_STATUSALLMONS_PATCH 0
+#define BAR_STATUSALLMONS_PATCH 1 //renzo 1 original 0
 
 /* This patch enables colored text in the status bar. It changes the way colors are defined
  * in config.h allowing multiple color combinations for use in the status script.
@@ -431,12 +425,12 @@
  *
  * https://dwm.suckless.org/patches/statuscolors/
  */
-#define BAR_STATUSCOLORS_PATCH 0
+#define BAR_STATUSCOLORS_PATCH 0 //renzo maybe
 
 /* This patch adds configuration options for horizontal and vertical padding in the status bar.
  * https://dwm.suckless.org/patches/statuspadding/
  */
-#define BAR_STATUSPADDING_PATCH 0
+#define BAR_STATUSPADDING_PATCH 1 //renzo 1 was 0
 
 /* This patch adds the ability for dwm to read colors from the linux virtual console.
  *    /sys/module/vt/parameters/default_{red,grn,blu}
@@ -469,15 +463,6 @@
  * https://dwm.suckless.org/patches/alwayscenter/
  */
 #define ALWAYSCENTER_PATCH 0
-
-/* Allows for floating windows to be toggled to be always on top (aot).
- *
- * Disclaimer: Some flickering may be expected with this patch when floating and aot
- * windows overlap.
- *
- * https://dwm.suckless.org/patches/alwaysontop/
- */
-#define ALWAYSONTOP_PATCH 0
 
 /* This patch allows windows to be resized with its aspect ratio remaining constant.
  * https://dwm.suckless.org/patches/aspectresize/
@@ -514,26 +499,13 @@
  * than the original ~/.dwm folder.
  * https://dwm.suckless.org/patches/autostart/
  */
-#define AUTOSTART_PATCH 1
+#define AUTOSTART_PATCH 1 //renzo 1 was 0-this is to replace chadwm bad autostart management, see also cool_autostart as an alternative
 
 /* By default, windows that are not visible when requesting a resize/move will not
  * get resized/moved. With this patch, they will.
  * https://dwm.suckless.org/patches/autoresize/
  */
 #define AUTORESIZE_PATCH 0
-
-/* This patch allows for the mouse cursor to automatically hide when the user uses the keyboard.
- *
- * You need to uncomment the corresponding lines in config.mk to use additional libraries
- * when including this patch.
- *
- * This patch depends on the following libraries:
- *    - libxfixes
- *    - libxi
- *
- * https://github.com/bakkeby/patches/wiki/banish
- */
-#define BANISH_PATCH 0
 
 /* This patch adds proper support for Right-To-Left languages. (such as Farsi, Arabic or Hebrew).
  *
@@ -584,7 +556,7 @@
  * respective stack in tiled layout.
  * https://dwm.suckless.org/patches/cfacts/
  */
-#define CFACTS_PATCH 0
+#define CFACTS_PATCH 1 //renzo 1 was 0
 
 /* This patch allows color attributes to be set through the command line.
  * https://dwm.suckless.org/patches/cmdcustomize/
@@ -646,7 +618,7 @@
  * This patch can be a bit wonky with other layouts, but generally works.
  * https://dwm.suckless.org/patches/dragmfact/
  */
-#define DRAGMFACT_PATCH 0
+#define DRAGMFACT_PATCH 1 //renzo 1 was 0
 
 /* Simple dwmc client using a fork of fsignal to communicate with dwm.
  * To use this either copy the patch/dwmc shell script to somewhere in your path or
@@ -703,7 +675,7 @@
  * the right tag.
  * http://dwm.suckless.org/patches/focusadjacenttag/
  */
-#define FOCUSADJACENTTAG_PATCH 0
+#define FOCUSADJACENTTAG_PATCH 1 //renzo 1, was 0
 
 /* Allows focusing on clients based on direction (up, down, left, right) instead of client order.
  * https://github.com/bakkeby/patches/wiki/focusdir/
@@ -757,18 +729,6 @@
  * https://dwm.suckless.org/patches/fullscreen/
  */
 #define FULLSCREEN_PATCH 0
-
-/* Adds a rule identifying clients as a "game" such that if the client is in fullscreen and it
- * loses focus (e.g. by moving to another tag) then it will automatically be minimized (set to
- * IconicState and unmapped).
- *
- * When the client receives focus again (e.g. by going back to its tag) then it will
- * automatically be unminimized (set to NormalState and mapped). This should address many of the
- * black screen or window is tiny issues after having moved to another tag and back again.
- *
- * https://github.com/bakkeby/patches/wiki/steam
- */
-#define GAMES_PATCH 0
 
 /* This patch provides a keybinding to rotate all clients in the currently selected
  * area (master or stack) without affecting the other area.
@@ -856,11 +816,6 @@
  */
 #define MONOCLESYMBOL_PATCH 0
 
-/* This patch provides a keybinding to center the focused window.
- * https://dwm.suckless.org/patches/movecenter/
- */
-#define MOVECENTER_PATCH 0
-
 /* Makes a window floating and 1/3rd the height and 1/3rd the width of the screen and is
  * positioned in either the center or one of the 8 cardinal directions depending on which
  * key is pressed.
@@ -876,7 +831,7 @@
 /* This patch allows you to move clients around in the stack and swap them with the master.
  * https://dwm.suckless.org/patches/movestack/
  */
-#define MOVESTACK_PATCH 0
+#define MOVESTACK_PATCH 1 //renzo 1 was 0
 
 /* This patch allows you to change the names of tags during runtime.
  *
@@ -913,7 +868,7 @@
 /* Removes the border when there is only one window visible.
  * https://dwm.suckless.org/patches/noborder/
  */
-#define NOBORDER_PATCH 0
+#define NOBORDER_PATCH 1 //renzo 1 was 0
 
 /* Enable modifying or removing dmenu in config.def.h which resulted previously in a
  * compilation error because two lines of code hardcode dmenu into dwm.
@@ -959,13 +914,13 @@
  * This is to prevent you accidentally losing all your work.
  * https://dwm.suckless.org/patches/onlyquitonempty/
  */
-#define ONLYQUITONEMPTY_PATCH 0
+#define ONLYQUITONEMPTY_PATCH 1
 
 /* The pertag patch adds nmaster, mfacts and layouts per tag rather than per
  * monitor (default).
  * https://dwm.suckless.org/patches/pertag/
  */
-#define PERTAG_PATCH 0
+#define PERTAG_PATCH 1 //renzo 1, was 0
 
 /* Option to enable gaps on a per tag basis rather than globally.
  * Depends on both pertag and vanitygaps patches being enabled.
@@ -1046,7 +1001,7 @@
  * Additionally dwm can quit cleanly by using kill -TERM dwmpid.
  * https://dwm.suckless.org/patches/restartsig/
  */
-#define RESTARTSIG_PATCH 0
+#define RESTARTSIG_PATCH 1 //renzo 1 was 0
 
 /* Adds rio-like drawing to resize the selected client.
  * This depends on an external tool slop being installed.
@@ -1118,7 +1073,7 @@
 /* Allows restarting dwm without the dependency of an external script.
  * https://dwm.suckless.org/patches/selfrestart/
  */
-#define SELFRESTART_PATCH 0
+#define SELFRESTART_PATCH 1 //renzo 1 was 0
 
 /* Floating windows being sent to another monitor will be centered.
  * https://dwm.suckless.org/patches/sendmoncenter/
@@ -1162,7 +1117,7 @@
 /* This patch adds keybindings for left and right circular shift through tags.
  * https://github.com/chau-bao-long/dotfiles/blob/master/suckless/dwm/shiftview.diff
  */
-#define SHIFTVIEW_PATCH 0
+#define SHIFTVIEW_PATCH 0 //renzo 0 was 0 - doh!
 
 /* This variant of the shiftview patch adds left and right circular shift through tags,
  * but skips tags where there are no clients.
@@ -1424,13 +1379,13 @@
  * https://github.com/bakkeby/patches/blob/master/dwm/dwm-vanitygaps-6.2.diff
  * https://github.com/bakkeby/patches/blob/master/dwm/dwm-cfacts-vanitygaps-6.2.diff
  */
-#define VANITYGAPS_PATCH 0
+#define VANITYGAPS_PATCH 1 //renzo 1 was 0
 
 /* This patch adds outer gaps for the monocle layout.
  * Most gaps patches tries to avoid gaps on the monocle layout, as it is often used as a
  * fullscreen mode, hence this is enabled separately from the main vanitygaps patch.
  */
-#define VANITYGAPS_MONOCLE_PATCH 0
+#define VANITYGAPS_MONOCLE_PATCH 0 //renzo maybe
 
 /* By default MOD+Tab will take the user back to the previous tag only. If the user keeps
  * using MOD+Tab then the view will switch back and forth between the current and previous tag.
@@ -1505,7 +1460,7 @@
 /* Bottomstack layout.
  * https://dwm.suckless.org/patches/bottomstack/
  */
-#define BSTACK_LAYOUT 0
+#define BSTACK_LAYOUT 1//renzo 1 was 0
 
 /* Bottomstack horizontal layout.
  * https://dwm.suckless.org/patches/bottomstack/
@@ -1536,12 +1491,12 @@
 /* Fibonacci dwindle layout.
  * https://dwm.suckless.org/patches/fibonacci/
  */
-#define FIBONACCI_DWINDLE_LAYOUT 0
+#define FIBONACCI_DWINDLE_LAYOUT 1 //renzo 1 was 0
 
 /* Fibonacci spiral layout.
  * https://dwm.suckless.org/patches/fibonacci/
  */
-#define FIBONACCI_SPIRAL_LAYOUT 0
+#define FIBONACCI_SPIRAL_LAYOUT 0  //renzo 1 was 0
 
 /* Flextile deluxe layout.
  * A revamped, more flexible, and over-the-top version of the original flextile layout.
@@ -1552,7 +1507,7 @@
 /* Gappless grid layout.
  * https://dwm.suckless.org/patches/gaplessgrid/
  */
-#define GAPPLESSGRID_LAYOUT 0
+#define GAPPLESSGRID_LAYOUT 1 //renzo 1 was 0
 
 /* Gridmode (grid) layout.
  * https://dwm.suckless.org/patches/gridmode/
@@ -1562,7 +1517,7 @@
 /* Horizontal grid (horizgrid) layout.
  * https://dwm.suckless.org/patches/horizgrid/
  */
-#define HORIZGRID_LAYOUT 0
+#define HORIZGRID_LAYOUT 1 //renzo 1 was 0
 
 /* Grid layout where nmaster controls the number of rows.
  * https://dwm.suckless.org/patches/nrowgrid/
@@ -1579,13 +1534,12 @@
  */
 #define MONOCLE_LAYOUT 1
 
-
 /* Colorful tags
  * This allows per-tag colors by adding a:
  *      static const unsigned int colorfultag = 1; // this is in config.h and allows toggle the functionalyty on and off
  *      adding color schemas in config.h
 */
-#define BAR_PER_TAG_COLOR_RENBEN_PATCH 0
+#define BAR_PER_TAG_COLOR_RENBEN_PATCH 1
 
 /* shows the number of clients in each tag in the tag bar with superscript or subscript digit
  * topleft or topright or bottomlrft ot bottomright.
@@ -1599,24 +1553,23 @@
  * 3. set current tagicon to previous in the tagicons[] array
  * todo: 4. sets per tag icon to reflect the main client in that tag in some way
 */
-#define BAR_TAG_MULTI_ICONS_RENBEN_PATCH 0
+#define BAR_TAG_MULTI_ICONS_RENBEN_PATCH 1
 
 /* renzo: adds a global variable in config.h and config.def.h to specify the percentage of the left-right-padding. Normally lrpad is set to the font height*/
-#define BAR_LRPAD_PERCENTAGE_RENBEN_PATCH 0
+#define BAR_LRPAD_PERCENTAGE_RENBEN_PATCH 1
 
-/* renzo: custom fonts for the statusbar*/
-#define BAR_STATUS_FONT_RENBEN_PATCH 0
-
+/* renzo: custom fonts for the statusbar. NEEDS BAR_STATUS2D_PATCH*/
+#define BAR_STATUS_FONT_RENBEN_PATCH 1
 
 /* This patch gets effetive only if FOCUSADJACENTTAG_PATCH in not 0, else it does nothing.
     it add circular functionality to the focus moves, e.g if you are on the rightmost tag
     it move to the first.
  */
-#define FOCUSADJACENTTAG_CIRCULAR_RENBEN_PATCH 0
+#define FOCUSADJACENTTAG_CIRCULAR_RENBEN_PATCH 1 //renzo 1, was 0
 
 /*  This patch gets effetive only if FOCUSADJACENTTAG_PATCH in not 0 
     AND FOCUSADJACENTTAG_CIRCULAR_RENBEN_PATCH is not zero, else it does nothing.
     it adds circular functionality to the focus moves on occupied tags only, e.g if you are on the rightmost tag
     it move to the first.
  */
-#define FOCUSADJACENTTAG_ACTIVE_CIRCULAR_RENBEN_PATCH 0
+#define FOCUSADJACENTTAG_ACTIVE_CIRCULAR_RENBEN_PATCH 1 //renzo 1, was 0

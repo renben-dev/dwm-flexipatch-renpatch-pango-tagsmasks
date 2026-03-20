@@ -8,7 +8,8 @@ width_taglabels(Bar *bar, BarArg *a)
 	unsigned int occ = 0;
 
 	for (c = m->clients; c; c = c->next)
-		occ |= c->tags == 255 ? 0 : c->tags;
+		//occ |= c->tags == 255 ? 0 : c->tags;
+		occ |= c->tags == TAGMASK ? 0 : c->tags; //renzo correction to git
 
 	for (w = 0, i = 0; i < NUMTAGS; i++) {
 		m->taglabel[i][0] = '\0';
@@ -31,7 +32,11 @@ width_taglabels(Bar *bar, BarArg *a)
 		} else
 			snprintf(m->taglabel[i], 64, etagf, icon);
 
+		#if BAR_PANGO_PATCH // 	renzo
+		w += TEXTWM(m->taglabel[i]);
+		#else
 		w += TEXTW(m->taglabel[i]);
+		#endif // BAR_PANGO_PATCH
 	}
 	return w;
 }
@@ -60,7 +65,13 @@ draw_taglabels(Bar *bar, BarArg *a)
 			? SchemeUrg
 			: SchemeTagsNorm
 		]);
+		
+		#if BAR_PANGO_PATCH // 	renzo
+		w = TEXTWM(m->taglabel[i]);
+		#else
 		w = TEXTW(m->taglabel[i]);
+		#endif // BAR_PANGO_PATCH
+		
 		drw_text(drw, x, a->y, w, a->h, lrpad / 2, m->taglabel[i], invert, False);
 		drawindicator(m, NULL, occ, x, a->y, w, a->h, i, -1, invert, tagindicatortype);
 		#if BAR_UNDERLINETAGS_PATCH
@@ -82,7 +93,12 @@ click_taglabels(Bar *bar, Arg *arg, BarArg *a)
 	do {
 		if (!m->taglabel[i][0])
 			continue;
+		#if BAR_PANGO_PATCH // 	renzo
+		x += TEXTWM(m->taglabel[i]);
+		#else
 		x += TEXTW(m->taglabel[i]);
+		#endif // BAR_PANGO_PATCH
+
 	} while (a->x >= x && ++i < NUMTAGS);
 	if (i < NUMTAGS) {
 		arg->ui = 1 << i;
@@ -113,7 +129,12 @@ hover_taglabels(Bar *bar, BarArg *a, XMotionEvent *ev)
 	do {
 		if (!m->taglabel[i][0])
 			continue;
+		#if BAR_PANGO_PATCH // 	renzo
+		x += TEXTWM(m->taglabel[i]);
+		#else
 		x += TEXTW(m->taglabel[i]);
+		#endif // BAR_PANGO_PATCH
+		
 	} while (a->x >= x && ++i < NUMTAGS);
 
 	if (i < NUMTAGS) {

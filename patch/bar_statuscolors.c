@@ -75,7 +75,7 @@ textw_wosc(char *s)
 }
 
 int
-draw_wosc(Bar *bar, BarArg *a, char *s)
+draw_wosc(Bar *bar, BarArg *a, char *s)  //renzo here
 {
 	char *ts = s;
 	char *tp = s;

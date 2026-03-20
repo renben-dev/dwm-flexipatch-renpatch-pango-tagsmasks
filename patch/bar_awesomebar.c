@@ -64,6 +64,7 @@ draw_awesomebar(Bar *bar, BarArg *a)
 				cpad = (tabw - TEXTW(c->name)) / 2;
 			#endif // BAR_CENTEREDWINDOWNAME_PATCH
 
+			//renzo here
 			drw_setscheme(drw, scheme[scm]);
 
 			XSetForeground(drw->dpy, drw->gc, drw->scheme[ColBg].pixel);

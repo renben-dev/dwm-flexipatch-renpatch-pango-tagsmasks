@@ -1,0 +1,1 @@
+static void set_next_tagicons();

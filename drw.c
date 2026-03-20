@@ -181,6 +181,7 @@ xfont_create(Drw *drw, const char *fontname)
 	pango_layout_set_font_description(font->layout, desc);
 
 	metrics = pango_context_get_metrics(context, desc, pango_language_from_string ("en-us"));
+	
 	font->h = pango_font_metrics_get_height(metrics) / PANGO_SCALE;
 
 	pango_font_metrics_unref(metrics);
@@ -283,7 +284,7 @@ drw_fontset_create(Drw* drw, const char *fonts[], size_t fontcount)
 {
 	Fnt *cur, *ret = NULL;
 	size_t i;
-
+	
 	if (!drw || !fonts)
 		return NULL;
 
@@ -474,8 +475,8 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
 					pango_layout_set_markup(drw->fonts->layout, buf, len);
 				else
 					pango_layout_set_text(drw->fonts->layout, buf, len);
-				pango_xft_render_layout(d, &drw->scheme[invert ? ColBg : ColFg],
-					drw->fonts->layout, x * PANGO_SCALE, ty * PANGO_SCALE);
+					
+				pango_xft_render_layout(d, &drw->scheme[invert ? ColBg : ColFg], drw->fonts->layout, x * PANGO_SCALE, ty * PANGO_SCALE);
 				if (markup) /* clear markup attributes */
 					pango_layout_set_attributes(drw->fonts->layout, NULL);
 			}

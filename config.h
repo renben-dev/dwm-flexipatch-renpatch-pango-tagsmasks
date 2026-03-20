@@ -4,12 +4,45 @@
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define CMD(...)   { .v = (const char*[]){ __VA_ARGS__, NULL } }
 
+/*start include for renzo volume-brighness manual patch*/
+#include <X11/XF86keysym.h>
+/*end*/
+
+/* start: added color palette Renzo 2025.06.22 */
+#define SL_RED_STR       "#E6194B"  // #E6194B
+#define SL_YELLOW_STR    "#E8CF2A"  // #E8CF2A
+#define SL_BLUE_STR      "#4363D8"  // #4363D8
+#define SL_GREEN_STR     "#3CB44B"  // #3CB44B	
+#define SL_ORANGE_STR    "#EF9930"  // #EF9930
+#define SL_MAGENTA_STR   "#FF00FF"	// #FF00FF
+#define SL_CYAN_STR      "#42D4F4"  // #42D4F4
+#define SL_PURPLE_STR    "#911EB4"  // #911EB4	
+#define SL_BROWN_STR     "#9A6324"  // #9A6324k
+//#define SL_ORANGE_STR  "#FF8C00"  // #FF8C00
+//#define YELLOW_STR  "#FFE119"  // #FFE119
+/* end: added color palette Renzo 2025.06.22 */
+
+/* start: palette dracula + blue Renzo 2025.06.22 */
+#define DRACULABL_BLACK_STR     "#21222C"  // #21222C
+#define DRACULABL_WHITE_STR     "#f8f8f2"  // #f8f8f2
+#define DRACULABL_GRAY2_STR     "#282a36"  // #282a36 (unfocused window border)
+#define DRACULABL_GRAY3_STR     "#44475a"  // #44475a
+#define DRACULABL_GRAY4_STR     "#282a36"  // #282a36
+#define DRACULABL_BLUE_STR      "#199cb3"  // #199cb3 (Renzo 20.03.25)
+#define DRACULABL_GREEN_STR     "#50fa7b"  // #50fa7b
+#define DRACULABL_RED_STR       "#ff5555"  // #ff5555
+#define DRACULABL_ORANGE_STR    "#ffb86c"  // #ffb86c
+#define DRACULABL_YELLOW_STR    "#f1fa8c"  // #f1fa8c
+#define DRACULABL_PINK_STR      "#ff79c6"  // #ff79c6
+/* end: palette dracula + blue Renzo 2025.06.22 */
+
+
 /* appearance */
 #if ROUNDED_CORNERS_PATCH
-static const unsigned int borderpx       = 0;   /* border pixel of windows */
+static const unsigned int borderpx       = 2;   /* border pixel of windows */
 static const int corner_radius           = 10;
 #else
-static const unsigned int borderpx       = 1;   /* border pixel of windows */
+static const unsigned int borderpx       = 2;   /* border pixel of windows */
 #endif // ROUNDED_CORNERS_PATCH
 #if BAR_BORDER_PATCH
 /* This allows the bar border size to be explicitly set separately from borderpx.
@@ -28,10 +61,10 @@ static const int scalepreview            = 4;        /* Tag preview scaling */
 static int nomodbuttons                  = 1;   /* allow client mouse button bindings that have no modifier */
 #endif // NO_MOD_BUTTONS_PATCH
 #if VANITYGAPS_PATCH
-static const unsigned int gappih         = 20;  /* horiz inner gap between windows */
-static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
-static const unsigned int gappoh         = 10;  /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 30;  /* vert outer gap between windows and screen edge */
+static const unsigned int gappih         = 4;  /* horiz inner gap between windows */
+static const unsigned int gappiv         = 4;  /* vert inner gap between windows */
+static const unsigned int gappoh         = 0;  /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 0;  /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 #endif // VANITYGAPS_PATCH
 #if AUTOSTART_PATCH
@@ -63,8 +96,8 @@ static const int toptab                  = False;               /* False means b
 static const int bar_height              = 0;   /* 0 means derive from font, >= 1 explicit height */
 #endif // BAR_HEIGHT_PATCH
 #if BAR_PADDING_PATCH
-static const int vertpad                 = 10;  /* vertical padding of bar */
-static const int sidepad                 = 10;  /* horizontal padding of bar */
+static const int vertpad                 = 0;  /* vertical padding of bar */ //renzo 0 was 10
+static const int sidepad                 = 0;  /* horizontal padding of bar */ //renzo 0 was 10
 #endif // BAR_PADDING_PATCH
 #if BAR_WINICON_PATCH
 #define ICONSIZE 20    /* icon size */
@@ -93,8 +126,8 @@ static const int statusmon               = 0;
 #else
 static const int statusmon               = 'A';
 #endif // BAR_STATUSALLMONS_PATCH | BAR_STATICSTATUS_PATCH
-#if BAR_STATUSPADDING_PATCH
-static const int horizpadbar             = 2;   /* horizontal padding for statusbar */
+#if BAR_STATUSPADDING_PATCH				//renzo note: this is the padding between the bar content and the bar border
+static const int horizpadbar             = 0;   /* horizontal padding statusbar */ //renzo 0, was 2
 static const int vertpadbar              = 0;   /* vertical padding for statusbar */
 #endif // BAR_STATUSPADDING_PATCH
 #if BAR_STATUSBUTTON_PATCH
@@ -110,16 +143,16 @@ static const char etagf[] = "[%s]";             /* format of an empty tag */
 static const int lcaselbl = 0;                  /* 1 means make tag label lowercase */
 #endif // BAR_TAGLABELS_PATCH
 #if BAR_UNDERLINETAGS_PATCH || BAR_PER_TAG_COLOR_RENBEN_PATCH
-static const unsigned int ulinepad = 5;         /* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke  = 2;     /* thickness / height of the underline */
-static const unsigned int ulinevoffset = 0;     /* how far above the bottom of the bar the line should appear */
+static const unsigned int ulinepad = 8;         /* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke  = 3;     /* thickness / height of the underline */
+static const unsigned int ulinevoffset = 1;     /* how far above the bottom of the bar the line should appear */
 static const int ulineall = 0;                  /* 1 to show underline on all tags, 0 for just the active ones */
 #endif // BAR_UNDERLINETAGS_PATCH || BAR_PER_TAG_COLOR_RENBEN_PATCH
 
 #if BAR_TAG_MULTI_ICONS_RENBEN_PATCH
-static unsigned int tagicons_default = 0;
+static unsigned int tagicons_default = 4;
 // BAR_TAG_MULTI_ICONS_RENBEN_PATCH
-#elif NAMETAG_PATCH
+#elif NAMETAG_PATCH // BAR_TAG_MULTI_ICONS_RENBEN_PATCH
 #if NAMETAG_PREPEND_PATCH
 /* The format in which the tag is written when named. E.g. %d: %.12s will write the tag number
  * followed the first 12 characters of the given string. You can also just use "%d: %s" here. */
@@ -146,16 +179,13 @@ static const unsigned int maxhtab          = 200;  /* tab menu height */
 #endif // ALT_TAB_PATCH
 
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
+static int tagindicatortype              = INDICATOR_NONE; //= INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
 #if FAKEFULLSCREEN_CLIENT_PATCH && !FAKEFULLSCREEN_PATCH
 static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 #endif // FAKEFULLSCREEN_CLIENT_PATCH
-#if ALWAYSONTOP_PATCH
-static int aotindicatortype              = INDICATOR_TOP_LEFT_LARGER_SQUARE;
-#endif // ALWAYSONTOP_PATCH
 #if ONLYQUITONEMPTY_PATCH
 static const int quit_empty_window_count = 0;   /* only allow dwm to quit if no (<= count) windows are open */
 #endif // ONLYQUITONEMPTY_PATCH
@@ -170,13 +200,14 @@ static void (*bartabmonfns[])(Monitor *) = { NULL /* , customlayoutfn */ };
 #endif // MONOCLE_LAYOUT
 #endif // BAR_TABGROUPS_PATCH
 #if BAR_PANGO_PATCH
-static const char font[]                 = "monospace 10";
+static const char font[]                 = "Noto Sans 11";
 #else
-static const char *fonts[]               = { "monospace:size=10" };
+static const char *fonts[]               = {"Noto Sans:style=Regular:size=12", "JetBrainsMono Nerd Font Mono:style=medium:size=19" };//was { "monospace:size=10" };
 #endif // BAR_PANGO_PATCH
+
 #if BAR_PER_TAG_COLOR_RENBEN_PATCH
 static const unsigned int colorful_tags 	 = 1;   /* 0 means use SchemeSel for selected tag */ 
-static const unsigned int underline_sel_tags = 1;   /* 1 or !=0 = underline selected tag(s) instead of changing color schema
+static const unsigned int underline_sel_tags = 1;   /* 1 or !=0  underline selected tag(s) instead of changing color schema
 													 * O = default dwm behaviour
 													 * this require BAR_UNDERLINETAGS_PATCH to be 1
 													 * if BAR_UNDERLINETAGS_PATCH is not active if fallsback to normal dwm behaviour */                                               
@@ -185,12 +216,12 @@ static const unsigned int invert_target_tag = 1;    /* is set to 1 then if a win
 													 * this happens for example if you open a text file and it's application is alredy open in other tag*/
 #endif //BAR_PER_TAG_COLOR_RENBEN_PATCH
 #if BAR_TAG_NUM_CLIENTS_INDICATOR_RENBEN_PATCH
-	static int tag_num_clients_type  = INDICATOR_NUMBER_OF_CLIENTS_NONE; // sets position around tag icon. See "bar_number_of_clients_indicator.h" for more options
-#endif //BAR_TAG_NUM_CLIENTS_INDICATOR_RENBEN_PATCH
+	static int tag_num_clients_type  = INDICATOR_NUMBER_OF_CLIENTS_TOP_RIGHT; // sets position around tag icon. See "bar_number_of_clients_indicator.h" for more options
+#endif
 
 #if BAR_LRPAD_PERCENTAGE_RENBEN_PATCH
-static const unsigned int lrpad_percentage = 50;  /* the multiplying factor will be this variable lrpag_percentage. E.g. id 56% is desired, set it to 56*/ 
-#endif // BAR_LRPAD_PERCENTAGE_RENBEN_PATCH
+static const unsigned int lrpad_percentage = 65;  /* the multiplying factor will be this variable lrpag_percentage. E.g. id 56% is desired, set it to 56*/ 
+#endif
 
 static const char dmenufont[]            = "monospace:size=10";
 
@@ -203,18 +234,23 @@ static char normfloatcolor[]             = "#db8fd9";
 
 static char selfgcolor[]                 = "#eeeeee";
 static char selbgcolor[]                 = "#005577";
-static char selbordercolor[]             = "#005577";
-static char selfloatcolor[]              = "#005577";
+static char selbordercolor[]             = "#FF2222";//renzo red #FF2222 	#FF4500 orange, was #005577
+static char selfloatcolor[]              = "#FF4500"; //renzo 	#FF4500 orange, was #005577
 
 static char titlenormfgcolor[]           = "#bbbbbb";
 static char titlenormbgcolor[]           = "#222222";
 static char titlenormbordercolor[]       = "#444444";
 static char titlenormfloatcolor[]        = "#db8fd9";
 
-static char titleselfgcolor[]            = "#eeeeee";
-static char titleselbgcolor[]            = "#005577";
-static char titleselbordercolor[]        = "#005577";
-static char titleselfloatcolor[]         = "#005577";
+// static char titleselfgcolor[]            = "#eeeeee";
+// static char titleselbgcolor[]            = "#005577";
+// static char titleselbordercolor[]        = "#005577";
+// static char titleselfloatcolor[]         = "#005577";
+
+static char titleselfgcolor[]           = "#bbbbbb";
+static char titleselbgcolor[]           = "#222222";
+static char titleselbordercolor[]       = "#444444";
+static char titleselfloatcolor[]        = "#db8fd9";
 
 static char tagsnormfgcolor[]            = "#bbbbbb";
 static char tagsnormbgcolor[]            = "#222222";
@@ -235,11 +271,6 @@ static char urgfgcolor[]                 = "#bbbbbb";
 static char urgbgcolor[]                 = "#222222";
 static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#db8fd9";
-
-#if BAR_LTSYMBOL_SCHEME_PATCH
-static char ltsymbolfgcolor[]            = "#222222";
-static char ltsymbolbgcolor[]            = "#fe9877";
-#endif // BAR_LTSYMBOL_SCHEME_PATCH
 
 #if RENAMED_SCRATCHPADS_PATCH
 static char scratchselfgcolor[]          = "#FFF7D4";
@@ -290,12 +321,14 @@ static char selfloatbgcolor[]            = "#117799";
 #endif // BAR_FLEXWINTITLE_PATCH
 
 #if BAR_ALPHA_PATCH
-static const unsigned int baralpha = 0xd7;
+static const unsigned int baralpha = 0xe0;
 static const unsigned int borderalpha = OPAQUE;
+static const unsigned int border_sel_alpha = OPAQUE; //renzo added line: opacity for selected(focused) window. from 0 to 16^2-1, that is from 0X00 to 0xFF 
+static const unsigned int border_norm_alpha = 0x00U; //renzo added line: opacity for selected(focused) window. from 0 to 16^2-1, that is from 0X00 to 0xFF 
 static const unsigned int alphas[][3] = {
 	/*                       fg      bg        border     */
-	[SchemeNorm]         = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]          = { OPAQUE, baralpha, borderalpha },
+	[SchemeNorm]         = { OPAQUE, baralpha, border_norm_alpha }, //renzo border_norm_alpha, was bolderalpha
+	[SchemeSel]          = { OPAQUE, baralpha, border_sel_alpha }, //renzo border_sel_alpha, was bolderalpha
 	[SchemeTitleNorm]    = { OPAQUE, baralpha, borderalpha },
 	[SchemeTitleSel]     = { OPAQUE, baralpha, borderalpha },
 	[SchemeTagsNorm]     = { OPAQUE, baralpha, borderalpha },
@@ -303,9 +336,6 @@ static const unsigned int alphas[][3] = {
 	[SchemeHidNorm]      = { OPAQUE, baralpha, borderalpha },
 	[SchemeHidSel]       = { OPAQUE, baralpha, borderalpha },
 	[SchemeUrg]          = { OPAQUE, baralpha, borderalpha },
-	#if BAR_LTSYMBOL_SCHEME_PATCH
-	[SchemeLtSymbol]     = { OPAQUE, baralpha, borderalpha },
-	#endif // BAR_LTSYMBOL_SCHEME_PATCH
 	#if RENAMED_SCRATCHPADS_PATCH
 	[SchemeScratchSel]  = { OPAQUE, baralpha, borderalpha },
 	[SchemeScratchNorm] = { OPAQUE, baralpha, borderalpha },
@@ -397,9 +427,6 @@ static const int color_ptrs[][ColCount] = {
 	[SchemeHidNorm]      = { 5,      0,      0,      -1 },
 	[SchemeHidSel]       = { 6,      -1,     -1,     -1 },
 	[SchemeUrg]          = { 7,      9,      9,      15 },
-	#if BAR_LTSYMBOL_SCHEME_PATCH
-	[SchemeLtSymbol]     = { -1,     3,      0,       0 },
-	#endif // BAR_LTSYMBOL_SCHEME_PATCH
 };
 #endif // BAR_VTCOLORS_PATCH
 
@@ -414,9 +441,6 @@ static char *colors[][ColCount] = {
 	[SchemeHidNorm]      = { hidnormfgcolor,   hidnormbgcolor,   c000000,              c000000 },
 	[SchemeHidSel]       = { hidselfgcolor,    hidselbgcolor,    c000000,              c000000 },
 	[SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
-	#if BAR_LTSYMBOL_SCHEME_PATCH
-	[SchemeLtSymbol]     = { ltsymbolfgcolor,  ltsymbolbgcolor,  c000000,              c000000 },
-	#endif // BAR_LTSYMBOL_SCHEME_PATCH
 	#if RENAMED_SCRATCHPADS_PATCH
 	[SchemeScratchSel]  = { scratchselfgcolor, scratchselbgcolor, scratchselbordercolor, scratchselfloatcolor },
 	[SchemeScratchNorm] = { scratchnormfgcolor, scratchnormbgcolor, scratchnormbordercolor, scratchnormfloatcolor },
@@ -458,28 +482,49 @@ static char *colors[][ColCount] = {
 	#endif // BAR_FLEXWINTITLE_PATCH
 
 	#if BAR_PER_TAG_COLOR_RENBEN_PATCH
-	[SchemeTagsNormUnoccupied] = { "#aaaaaa", 	tagsnormbgcolor,	tagsnormbordercolor, 	tagsnormfloatcolor }; // #aaaaaa unused tag / fallback // medium grey
-	
-	[SchemeTagsNorm00] = { "#ff0000",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ff0000 tag 1: red
-	[SchemeTagsNorm01] = { "#00ff00",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #00ff00 tag 2: green
-	[SchemeTagsNorm02] = { "#0000ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #0000ff tag 3: blue
-	[SchemeTagsNorm03] = { "#ffff00",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ffff00 tag 4: yellow
-	[SchemeTagsNorm04] = { "#00ffff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #00ffff tag 5: cyan
-	[SchemeTagsNorm05] = { "#ff00ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ff00ff tag 6: magenta
-	[SchemeTagsNorm06] = { "#003366",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #003366 tag 7: deep navy blue
-	[SchemeTagsNorm07] = { "#aaaaaa",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #aaaaaa tag 8: light gray
-	[SchemeTagsNorm08] = { "#ffaa00",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ffaa00 tag 9: orange
-	[SchemeTagsNorm09] = { "#ff8080",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ff8080 tag 10: light red
-	[SchemeTagsNorm10] = { "#80ff80",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #80ff80 tag 11: light green
-	[SchemeTagsNorm11] = { "#8080ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #8080ff tag 12: light blue
-	[SchemeTagsNorm12] = { "#ffff80",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ffff80 tag 13: light yellow
-	[SchemeTagsNorm13] = { "#80ffff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #80ffff tag 14: light cyan
-	[SchemeTagsNorm14] = { "#ff80ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ff80ff tag 15: light magenta
-	[SchemeTagsNorm15] = { "#dddddd",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #dddddd tag 16: soft white
-	[SchemeTagsNorm16] = { "#8B4513",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #8B4513 tag 17: msaddle brown
-	[SchemeTagsNorm17] = { "#ffcc00",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ffcc00 tag 18: golden
-	[SchemeTagsNorm18] = { "#cc66ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #cc66ff tag 19: violet
-	[SchemeTagsNorm19] = { "#00cc99",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #00cc99 tag 20: teal green
+	[SchemeTagsNormUnoccupied] = { "#aaaaaa", 	tagsnormbgcolor,	tagsnormbordercolor, 	tagsnormfloatcolor }, // unused tag / fallback // medium grey
+
+	[SchemeTagsNorm00] = { SL_RED_STR,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 1: red
+	[SchemeTagsNorm01] = { SL_BLUE_STR,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 2: green
+	[SchemeTagsNorm02] = { SL_YELLOW_STR, tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 3: blue
+	[SchemeTagsNorm03] = { SL_GREEN_STR,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 4: yellow
+	[SchemeTagsNorm04] = { SL_ORANGE_STR,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 5: cyan
+	[SchemeTagsNorm05] = { SL_MAGENTA_STR,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 6: magenta
+	[SchemeTagsNorm06] = { SL_CYAN_STR,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 7: deep navy blue
+	[SchemeTagsNorm07] = { SL_PURPLE_STR,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 8: light gray
+	[SchemeTagsNorm08] = { SL_BROWN_STR,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 9: orange
+	[SchemeTagsNorm09] = { "#ff8080",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 10: light red
+	[SchemeTagsNorm10] = { "#80ff80",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 11: light green
+	[SchemeTagsNorm11] = { "#8080ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 12: light blue
+	[SchemeTagsNorm12] = { "#ffff80",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 13: light yellow
+	[SchemeTagsNorm13] = { "#80ffff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 14: light cyan
+	[SchemeTagsNorm14] = { "#ff80ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 15: light magenta
+	[SchemeTagsNorm15] = { "#dddddd",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 16: soft white
+	[SchemeTagsNorm16] = { "#8B4513",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 17: msaddle brown
+	[SchemeTagsNorm17] = { "#ffcc00",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 18: golden
+	[SchemeTagsNorm18] = { "#cc66ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 19: violet
+	[SchemeTagsNorm19] = { "#00cc99",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // tag 20: teal green
+
+	// [SchemeTagsNorm00] = { "#ff0000",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ff0000 tag 1: red
+	// [SchemeTagsNorm01] = { "#00ff00",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #00ff00 tag 2: green
+	// [SchemeTagsNorm02] = { "#0000ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #0000ff tag 3: blue
+	// [SchemeTagsNorm03] = { "#ffff00",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ffff00 tag 4: yellow
+	// [SchemeTagsNorm04] = { "#00ffff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #00ffff tag 5: cyan
+	// [SchemeTagsNorm05] = { "#ff00ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ff00ff tag 6: magenta
+	// [SchemeTagsNorm06] = { "#003366",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #003366 tag 7: deep navy blue
+	// [SchemeTagsNorm07] = { "#aaaaaa",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #aaaaaa tag 8: light gray
+	// [SchemeTagsNorm08] = { "#ffaa00",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ffaa00 tag 9: orange
+	// [SchemeTagsNorm09] = { "#ff8080",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ff8080 tag 10: light red
+	// [SchemeTagsNorm10] = { "#80ff80",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #80ff80 tag 11: light green
+	// [SchemeTagsNorm11] = { "#8080ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #8080ff tag 12: light blue
+	// [SchemeTagsNorm12] = { "#ffff80",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ffff80 tag 13: light yellow
+	// [SchemeTagsNorm13] = { "#80ffff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #80ffff tag 14: light cyan
+	// [SchemeTagsNorm14] = { "#ff80ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ff80ff tag 15: light magenta
+	// [SchemeTagsNorm15] = { "#dddddd",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #dddddd tag 16: soft white
+	// [SchemeTagsNorm16] = { "#8B4513",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #8B4513 tag 17: msaddle brown
+	// [SchemeTagsNorm17] = { "#ffcc00",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #ffcc00 tag 18: golden
+	// [SchemeTagsNorm18] = { "#cc66ff",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #cc66ff tag 19: violet
+	// [SchemeTagsNorm19] = { "#00cc99",  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor }, // #00cc99 tag 20: teal green
 
 
 	// Filling remaining tags with dwm default colors
@@ -568,32 +613,147 @@ static Sp scratchpads[] = {
  * until it an icon matches. Similarly if there are two tag icons then it would alternate between
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
-#if BAR_TAG_MULTI_ICONS_RENBEN_PATCH 
+#if BAR_TAG_MULTI_ICONS_RENBEN_PATCH
+	#if BAR_PANGO_PATCH // renzo
+static const char *tagicons[][NUMTAGS] = {
+    /* default tags: just numbers */
+    {
+        "<span font_desc=\"Noto Sans Regular 10\">1</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">2</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">3</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">4</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">5</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">6</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">7</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">8</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">9</span>"
+    },
+
+    /* just icons */
+    {
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\">󰅩</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\">󰝚</span>"
+    },
+
+    /* superscript number + icon */
+    {
+        "<span font_desc=\"Noto Sans Regular 12\">¹</span><span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"Noto Sans Regular 12\">²</span><span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"Noto Sans Regular 12\">³</span><span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"Noto Sans Regular 12\">⁴</span><span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\">󰅩</span>",
+        "<span font_desc=\"Noto Sans Regular 12\">⁵</span><span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"Noto Sans Regular 12\">⁶</span><span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"Noto Sans Regular 12\">⁷</span><span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"Noto Sans Regular 12\">⁸</span><span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span>",
+        "<span font_desc=\"Noto Sans Regular 12\">⁹</span><span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\">󰝚</span>"
+    },
+
+    /* icon + space + superscript number */
+    {
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\">¹</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\"> ²</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\"> ³</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\">󰅩</span> <span font_desc=\"Noto Sans Regular 12\"> ⁴</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\"> ⁵</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\"> ⁶</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\"> ⁷</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\"> ⁸</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\">󰝚</span> <span font_desc=\"Noto Sans ffontsRegular 12\"> ⁹</span>"
+    },
+
+	/* icon + superscript number */
+    {
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\">¹</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\">²</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\">³</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\">󰅩</span> <span font_desc=\"Noto Sans Regular 12\">⁴</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\">⁵</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\">⁶</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\">⁷</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\"></span> <span font_desc=\"Noto Sans Regular 12\">⁸</span>",
+        "<span font_desc=\"JetBrainsMono Nerd Font Mono Medium 19\">󰝚</span> <span font_desc=\"Noto Sans Regular 12\">⁹</span>"
+    },
+
+    /* words only */
+    {
+        "<span font_desc=\"Noto Sans Regular 10\">Ter</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">Dir</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">Tex</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">Dev</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">Web</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">Mai</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">Not</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">Ima</span>",
+        "<span font_desc=\"Noto Sans Regular 10\">Muc</span>"
+    },
+
+    /* superscript + word */
+    {
+		"<span font_desc='Noto Sans Regular 12'>¹</span><span font_desc='Noto Sans Regular 10'>Ter</span>",
+		"<span font_desc='Noto Sans Regular 12'>²</span><span font_desc='Noto Sans Regular 10'>Dir</span>",
+		"<span font_desc='Noto Sans Regular 12'>³</span><span font_desc='Noto Sans Regular 10'>Tex</span>",
+		"<span font_desc='Noto Sans Regular 12'>⁴</span><span font_desc='Noto Sans Regular 10'>Dev</span>",
+		"<span font_desc='Noto Sans Regular 12'>⁵</span><span font_desc='Noto Sans Regular 10'>Web</span>",
+		"<span font_desc='Noto Sans Regular 12'>⁶</span><span font_desc='Noto Sans Regular 10'>Mai</span>",
+		"<span font_desc='Noto Sans Regular 12'>⁷</span><span font_desc='Noto Sans Regular 10'>Not</span>",
+		"<span font_desc='Noto Sans Regular 12'>⁸</span><span font_desc='Noto Sans Regular 10'>Ima</span>",
+		"<span font_desc='Noto Sans Regular 12'>⁹</span><span font_desc='Noto Sans Regular 10'>Muc</span>"
+	}
+};
+
+	#else // BAR_PANGO_PATCH
 static char *tagicons[][NUMTAGS] = {
 	{ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, /* default tags */
 	{
-		"", /* terminal     */
+		" ", /* terminal     */
 		"", /* folder */
 		"", /* text */
-		"", /* code != 󰅰 󱃖  󰈮 󰘦   󰅩      */		
+		"󰅩", /* code != 󰅰 󱃖  󰈮 󰘦   󰅩      */		
 		"", /* web  */
 		"", /* mail */
-		"", /* notes */s
+		"", /* notes */
 		"", /* photo */
 		"󰝚", /* music */
-		//"", /* image manipulation */
 	},
 	{
-		"¹", /* terminal    */
+		"¹", /* terminal    */
 		"²", /* folder */
 		"³", /* text */
-		"⁴", /* code */		
+		"⁴󰅩", /* code 󰘦 */		
 		"⁵", /* web  */
 		"⁶", /* mail */
 		"⁷", /* notes */
 		"⁸", /* photo */
 		"⁹󰝚", /* music */
-		//"", /* image manipulation */
+	},
+	{
+		"¹", /* terminal    */
+		"²", /* folder */
+		"³", /* text */
+		"󰅩", /* code 󰘦 */		
+		"⁵", /* web  */
+		"⁶", /* mail */
+		"⁷", /* notes */
+		"⁸", /* photo */
+		"󰝚⁹", /* music */
+	},
+	{
+		"¹", /* terminal    */
+		" ²", /* folder */
+		" ³", /* text */
+		"󰅩 ⁴", /* code 󰘦 ⁴ */		
+		" ⁵", /* web  */
+		" ⁶", /* mail */
+		" ⁷", /* notes */
+		" ⁸", /* photo */
+		"󰝚 ⁹", /* music */
 	},
 	{
 		"Ter", /* terminal */
@@ -605,7 +765,6 @@ static char *tagicons[][NUMTAGS] = {
 		"Not", /* notes */
 		"Ima", /* photo */
 		"Muc", /* music */
-		//"", /* image manipulation */
 	},
 	{
 		"¹Ter", /* terminal */
@@ -617,9 +776,9 @@ static char *tagicons[][NUMTAGS] = {
 		"⁷Not", /* notes */
 		"⁸Ima", /* photo */
 		"⁹Muc", /* music */
-		//"", /* image manipulation */
 	}
 };
+	#endif
 #elif NAMETAG_PATCH
 static char tagicons[][NUMTAGS][MAX_TAGLEN] =
 {
@@ -635,8 +794,6 @@ static char *tagicons[][NUMTAGS] =
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
 #endif // NAMETAG_PATCH
-
-
 
 
 #if BAR_TAGGRID_PATCH
@@ -682,13 +839,18 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.class = "Gimp", .tags = 1 << 4)
+	RULE(.class = "Gimp", .tags = 1 << 7)
 	RULE(.class = "Firefox", .tags = 1 << 7)
 	#if RENAMED_SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
 	#elif SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 	#endif // SCRATCHPADS_PATCH
+
+	RULE(.class = "Pavucontrol", .isfloating = 1) //renzo = added
+	RULE(.class = "Qalculate-gtk", .isfloating = 1) //renzo = added
+	RULE(.class = "Rofi", .isfloating = 1) //renzo = added
+	RULE(.title = "Picture in picture", .isfloating = 1) //renzo = added
 };
 
 #if MONITOR_RULES_PATCH
@@ -818,16 +980,6 @@ static const int nstack      = 0;    /* number of clients in primary stack area 
 #endif // FLEXTILE_DELUXE_LAYOUT
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
-static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
-#if PLACEMOUSE_PATCH
-static const int refreshrate_placemouse = 60; /* refresh rate (per second) for placemouse */
-#endif // PLACEMOUSE_PATCH
-#if DRAGMFACT_PATCH
-static const int refreshrate_dragmfact = 40; /* refresh rate (per second) for dragmfact */
-#endif // DRAGMFACT_PATCH
-#if DRAGCFACT_PATCH
-static const int refreshrate_dragcfact = 60; /* refresh rate (per second) for dragcfact */
-#endif // DRAGCFACT_PATCH
 #if DECORATION_HINTS_PATCH
 static const int decorhints  = 1;    /* 1 means respect decoration hints */
 #endif // DECORATION_HINTS_PATCH
@@ -913,11 +1065,15 @@ static const Layout layouts[] = {
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	#if TILE_LAYOUT
-	{ "[]=",      tile },    /* first entry is default */
+	// renzo:
+	// { "[]=",      tile },    /* first entry is default */
+	{ "T",      tile },    /* first entry is default */
 	#endif
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	//renzo: commit note: ><> lokes like a markuo, so we cold have issues when pango_patch is used
+	//{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "F",      NULL },    /* no layout function means floating behavior */
 	#if MONOCLE_LAYOUT
-	{ "[M]",      monocle },
+	{ "M",      monocle },
 	#endif
 	#if BSTACK_LAYOUT
 	{ "TTT",      bstack },
@@ -967,31 +1123,32 @@ static const char *xkb_layouts[]  = {
 #endif // XKB_PATCH
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask //renzo Mod4Mask was Mod1Mask, and all text in this file where ALTKEY is was Mod4Key
+#define ALTKEY Mod1Mask //renzo added line
 #if COMBO_PATCH && SWAPTAGS_PATCH && TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      comboview,      {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      combotag,       {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask|ShiftMask,    KEY,      swaptags,       {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask,              KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask|ControlMask,  KEY,      tagprevmon,     {.ui = 1 << TAG} },
+	{ MODKEY|ALTKEY|ShiftMask,     	KEY,      swaptags,       {.ui = 1 << TAG} }, \
+	{ MODKEY|ALTKEY,              	KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ALTKEY|ControlMask,  	KEY,      tagprevmon,     {.ui = 1 << TAG} },
 #elif COMBO_PATCH && SWAPTAGS_PATCH
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      comboview,      {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      combotag,       {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask|ShiftMask,    KEY,      swaptags,       {.ui = 1 << TAG} },
+	{ MODKEY|ALTKEY|ShiftMask,    	KEY,      swaptags,       {.ui = 1 << TAG} },
 #elif COMBO_PATCH && TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      comboview,      {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      combotag,       {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask,              KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask|ControlMask,  KEY,      tagprevmon,     {.ui = 1 << TAG} },
+	{ MODKEY|ALTKEY,              	KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ALTKEY|ControlMask,  	KEY,      tagprevmon,     {.ui = 1 << TAG} },
 #elif COMBO_PATCH
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      comboview,      {.ui = 1 << TAG} }, \
@@ -1004,24 +1161,24 @@ static const char *xkb_layouts[]  = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask|ShiftMask,    KEY,      swaptags,       {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask,              KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask|ControlMask,  KEY,      tagprevmon,     {.ui = 1 << TAG} },
+	{ MODKEY|ALTKEY|ShiftMask,    	KEY,      swaptags,       {.ui = 1 << TAG} }, \
+	{ MODKEY|ALTKEY,              	KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ALTKEY|ControlMask,  	KEY,      tagprevmon,     {.ui = 1 << TAG} },
 #elif SWAPTAGS_PATCH
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask|ShiftMask,    KEY,      swaptags,       {.ui = 1 << TAG} },
+	{ MODKEY|ALTKEY|ShiftMask,    	KEY,      swaptags,       {.ui = 1 << TAG} },
 #elif TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask,              KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask|ControlMask,  KEY,      tagprevmon,     {.ui = 1 << TAG} },
+	{ MODKEY|ALTKEY,              	KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ALTKEY|ControlMask,  	KEY,      tagprevmon,     {.ui = 1 << TAG} },
 #else
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
@@ -1064,7 +1221,118 @@ static const char *dmenucmd[] = {
 	#endif // BAR_DMENUMATCHTOP_PATCH
 	NULL
 };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "xfce4-terminal", NULL }; // renzo 20.03.25 "xfce4-terminal" was "st"
+static const char *rofi[]  = { "rofi", "-show", "drun" };//renzo added on 20.03.25
+
+/* START pulse audio control renzo manual patch*/
+static const char *upvol[]      = { "/usr/bin/pactl",   "set-sink-volume", "0",      "+5%",      NULL };
+static const char *downvol[]    = { "/usr/bin/pactl",   "set-sink-volume", "0",      "-5%",      NULL };
+static const char *mutevol[]    = { "/usr/bin/pactl",   "set-sink-mute",   "0",      "toggle",   NULL };
+/* END pulse audio control renzo manual patch*/
+
+/* START brightness renzo manual patch */
+//static const char *light_up[]   = { "/usr/bin/xbacklight",   "-inc", "5", NULL };
+
+/* renzo: old way whn NOT using modsetting graphics, but intel graphics
+static const char *light_up[]   = { "/bin/sh",   "-c", "xbacklight -set $(echo \"($(xbacklight -get)+2.5)/5*5+5\" | bc)", NULL };
+renzo: for modsetting graphics use this, light app must be installed on system */
+
+// linear brightness
+// static const char *light_up[] = {
+//     "/bin/sh", "-c",
+//     "light -S $(light -G | awk '{printf \"%d\", int(($1+2.5)/5)*5+5}')",
+//     NULL
+// };
+
+//gamma brightness
+//light app solution
+// static const char *light_up[] = {
+    // "/bin/sh", "-c",
+    // "light -S $(light -G | awk '{"
+	// "delta=1;"
+	// "b_lin=$1;"
+    // "b_gamma=sqrt(b_lin)*10;"
+    // "b_rounded=int((b_gamma+delta/2)/delta)*delta;"
+    // "b_rounded+=del;"
+    // "if(b_rounded>100) b_rounded=100;"
+    // "b_lin_new=b_rounded*b_rounded/100;"
+    // "printf(\"%2f\", b_lin_new);"
+    // "}')",
+    // NULL
+// };
+/* renzo: old way whn NOT using modsetting graphics, but intel graphics
+static const char *light_down[] = { "/bin/sh",   "-c", "if [ $(echo \"$(xbacklight -get) > 10\" |bc -l) = 1 ] ; then xbacklight -set $(echo \"($(xbacklight -get)+2.5)/5*5-5\" | bc) ; else xbacklight -set 5 ; fi", NULL };
+// renzo: for modsetting graphics use this, light app must be installed on system*/
+
+//linear brightness
+// static const char *light_down[] = { "/bin/sh", "-c",
+//     "if [ $(light -G | awk '{print ($1 > 10) ? 1 : 0}') -eq 1 ]; then "
+//     "light -S $(light -G | awk '{printf \"%d\", int(($1+2.5)/5)*5 - 5}'); "
+//     "else light -S 5; "
+//     "fi",
+//     NULL
+// };
+
+// brightnessctl solution
+static const char *light_up[] = {
+    "/bin/sh", "-c",
+    "(brightnessctl get; brightnessctl max) | paste -s -d ' ' - | awk '{"
+        "delta = 5; "
+        "cur = $1; "
+        "max = $2; "
+        "b_lin = cur / max; "
+        "b_gamma = sqrt(b_lin); "
+        "b_gamma_perc = int(100*b_gamma/delta+0.5)*delta; "
+        "b_gamma_perc += delta; "
+        "if(b_gamma_perc > 100) b_gamma_perc = 100; "
+        "cur_new = b_gamma_perc * b_gamma_perc / 10000 * max; "
+        "printf(\"%d\\n\", int(cur_new + 0.5));"
+    "}' | xargs brightnessctl set",
+    NULL
+};
+
+
+
+
+static const char *light_down[] = {
+    "/bin/sh", "-c",
+    "(brightnessctl get; brightnessctl max) | paste -s -d ' ' - | awk '{"
+        "delta = 5; "
+        "min_bright = 5; "
+        "cur = $1; "
+        "max = $2; "
+        "b_lin = cur / max; "
+        "b_gamma = sqrt(b_lin); "
+        "b_gamma_perc = int(100*b_gamma/delta+0.5)*delta; "
+        "b_gamma_perc -= delta; "
+        "if(b_gamma_perc < min_bright) b_gamma_perc = min_bright; "
+        "cur_new = b_gamma_perc * b_gamma_perc / 10000 * max; "
+        "printf(\"%d\\n\", int(cur_new + 0.5));"
+    "}' | xargs brightnessctl set",
+    NULL
+};
+
+// static const char *light_up[] = { "brightnessctl", "set", "+5%", NULL };
+// static const char *light_down[] = { "brightnessctl", "set", "5%-", NULL };
+
+//light app solution
+// static const char *light_down[] = {
+//     "/bin/sh", "-c",
+//     "light -S $(light -G | awk '{"
+// 	   "delta=5;"
+// 	   "min_bight=10;"
+//     "b_lin=$1;"
+//     "b_gamma=sqrt(b_lin)*10;"
+//     "b_rounded=int((b_gamma+delta/2)/delta)*delta;"
+//     "b_rounded-=delta;"
+//     "if(b_rounded<min_bright) b_rounded=min_bright;"
+//     "b_lin_new=b_rounded*b_rounded/100;"
+//     "printf(\"%.3f\", b_lin_new);"
+//     "}')",
+//     NULL
+// };
+
+/* END brightness renzo manual patch */
 
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
@@ -1189,20 +1457,20 @@ ResourcePref resources[] = {
 	{ "selSPRLbgcolor",         STRING,    &selSPRLbgcolor },
 	{ "selfloatbgcolor",        STRING,    &selfloatbgcolor },
 	#endif // BAR_FLEXWINTITLE_PATCH
-	#if BAR_LTSYMBOL_SCHEME_PATCH
-	{ "ltsymbolfgcolor",        STRING,    &ltsymbolfgcolor },
-	{ "ltsymbolbgcolor",        STRING,    &ltsymbolbgcolor },
-	#endif // BAR_LTSYMBOL_SCHEME_PATCH
 };
 #endif // XRESOURCES_PATCH
 
 static const Key keys[] = {
+	/* START renzo added keybindings 20.03.25 */
+	{ MODKEY,                       XK_x,          spawn,                  {.v = rofi } },
+	/* END renzo added keybindings 20.03.25 */
+
 	/* modifier                     key            function                argument */
 	#if KEYMODES_PATCH
 	{ MODKEY,                       XK_Escape,     setkeymode,             {.ui = COMMANDMODE} },
 	#endif // KEYMODES_PATCH
 	{ MODKEY,                       XK_p,          spawn,                  {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return,     spawn,                  {.v = termcmd } },
+	{ MODKEY,             			XK_Return,     spawn,                  {.v = termcmd } }, //renzo 20.03.25 MODKEY, was MODKEY|ShiftMask, 
 	#if RIODRAW_PATCH
 	{ MODKEY|ControlMask,           XK_p,          riospawnsync,           {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return,     riospawn,               {.v = termcmd } },
@@ -1222,8 +1490,8 @@ static const Key keys[] = {
 	STACKKEYS(MODKEY,                              focus)
 	STACKKEYS(MODKEY|ShiftMask,                    push)
 	#else
-	{ MODKEY,                       XK_j,          focusstack,             {.i = +1 } },
-	{ MODKEY,                       XK_k,          focusstack,             {.i = -1 } },
+	{ MODKEY,                       XK_h,          focusstack,             {.i = -1 } },//renzo -1 because to me right is clockwise, was +1
+	{ MODKEY,                       XK_l,          focusstack,             {.i = +1 } },//renzo +1 because to me right is clockwise, was -1
 	#endif // STACKER_PATCH
 	#if FOCUSDIR_PATCH
 	{ MODKEY,                       XK_Left,       focusdir,               {.i = 0 } }, // left
@@ -1244,14 +1512,14 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_v,          switchcol,              {0} },
 	#endif // SWITCHCOL_PATCH
 	#if ROTATESTACK_PATCH
-	{ MODKEY|Mod4Mask,              XK_j,          rotatestack,            {.i = +1 } },
-	{ MODKEY|Mod4Mask,              XK_k,          rotatestack,            {.i = -1 } },
+	{ MODKEY|ALTKEY,              XK_j,          rotatestack,            {.i = +1 } },
+	{ MODKEY|ALTKEY,              XK_k,          rotatestack,            {.i = -1 } },
 	#endif // ROTATESTACK_PATCH
 	#if INPLACEROTATE_PATCH
-	{ MODKEY|Mod4Mask,              XK_j,          inplacerotate,          {.i = +2 } }, // same as rotatestack
-	{ MODKEY|Mod4Mask,              XK_k,          inplacerotate,          {.i = -2 } }, // same as reotatestack
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_j,          inplacerotate,          {.i = +1} },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_k,          inplacerotate,          {.i = -1} },
+	{ MODKEY|ALTKEY,              XK_j,          inplacerotate,          {.i = +2 } }, // same as rotatestack
+	{ MODKEY|ALTKEY,              XK_k,          inplacerotate,          {.i = -2 } }, // same as reotatestack
+	{ MODKEY|ALTKEY|ShiftMask,    XK_j,          inplacerotate,          {.i = +1} },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_k,          inplacerotate,          {.i = -1} },
 	#endif // INPLACEROTATE_PATCH
 	#if PUSH_PATCH || PUSH_NO_MASTER_PATCH
 	{ MODKEY|ControlMask,           XK_j,          pushdown,               {0} },
@@ -1263,8 +1531,8 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask,           XK_i,          incnstack,              {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_u,          incnstack,              {.i = -1 } },
 	#endif // FLEXTILE_DELUXE_LAYOUT
-	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.05} },
-	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
+	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.02} },
+	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.02} },
 	#if CFACTS_PATCH
 	{ MODKEY|ShiftMask,             XK_h,          setcfact,               {.f = +0.25} },
 	{ MODKEY|ShiftMask,             XK_l,          setcfact,               {.f = -0.25} },
@@ -1275,18 +1543,18 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask|ShiftMask, XK_r,          aspectresize,           {.i = -24} },
 	#endif // ASPECTRESIZE_PATCH
 	#if MOVERESIZE_PATCH
-	{ MODKEY|Mod4Mask,              XK_Down,       moveresize,             {.v = "0x 25y 0w 0h" } },
-	{ MODKEY|Mod4Mask,              XK_Up,         moveresize,             {.v = "0x -25y 0w 0h" } },
-	{ MODKEY|Mod4Mask,              XK_Right,      moveresize,             {.v = "25x 0y 0w 0h" } },
-	{ MODKEY|Mod4Mask,              XK_Left,       moveresize,             {.v = "-25x 0y 0w 0h" } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_Down,       moveresize,             {.v = "0x 0y 0w 25h" } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_Up,         moveresize,             {.v = "0x 0y 0w -25h" } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_Right,      moveresize,             {.v = "0x 0y 25w 0h" } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_Left,       moveresize,             {.v = "0x 0y -25w 0h" } },
+	{ MODKEY|ALTKEY,              XK_Down,       moveresize,             {.v = "0x 25y 0w 0h" } },
+	{ MODKEY|ALTKEY,              XK_Up,         moveresize,             {.v = "0x -25y 0w 0h" } },
+	{ MODKEY|ALTKEY,              XK_Right,      moveresize,             {.v = "25x 0y 0w 0h" } },
+	{ MODKEY|ALTKEY,              XK_Left,       moveresize,             {.v = "-25x 0y 0w 0h" } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_Down,       moveresize,             {.v = "0x 0y 0w 25h" } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_Up,         moveresize,             {.v = "0x 0y 0w -25h" } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_Right,      moveresize,             {.v = "0x 0y 25w 0h" } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_Left,       moveresize,             {.v = "0x 0y -25w 0h" } },
 	#endif // MOVERESIZE_PATCH
 	#if MOVESTACK_PATCH
-	{ MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,          movestack,              {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_h,          movestack,              {.i = -1 } }, //renzo -1 because to me right is clockwise, was +1
+	{ MODKEY|ShiftMask,             XK_l,          movestack,              {.i = +1 } }, //renzo +1 because to me right is clockwise, was -1
 	#endif // MOVESTACK_PATCH
 	#if TRANSFER_PATCH
 	{ MODKEY,                       XK_x,          transfer,               {0} },
@@ -1303,24 +1571,24 @@ static const Key keys[] = {
 	#if INSETS_PATCH
 	{ MODKEY|ShiftMask|ControlMask, XK_a,          updateinset,            {.v = &default_inset } },
 	#endif // INSETS_PATCH
-	{ MODKEY,                       XK_Return,     zoom,                   {0} },
+	{ MODKEY|ShiftMask,             XK_Return,     zoom,                   {0} }, //renzo 20.03.25 { MODKEY|ShiftMask, was { MODKEY
 	#if VANITYGAPS_PATCH
-	{ MODKEY|Mod4Mask,              XK_u,          incrgaps,               {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,          incrgaps,               {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_i,          incrigaps,              {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_i,          incrigaps,              {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_o,          incrogaps,              {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_o,          incrogaps,              {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_6,          incrihgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_6,          incrihgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_7,          incrivgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_7,          incrivgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_8,          incrohgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_8,          incrohgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_9,          incrovgaps,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_9,          incrovgaps,             {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_0,          togglegaps,             {0} },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,          defaultgaps,            {0} },
+	{ MODKEY|ALTKEY,              XK_u,          incrgaps,               {.i = +1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_u,          incrgaps,               {.i = -1 } },
+	{ MODKEY|ALTKEY,              XK_i,          incrigaps,              {.i = +1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_i,          incrigaps,              {.i = -1 } },
+	{ MODKEY|ALTKEY,              XK_o,          incrogaps,              {.i = +1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_o,          incrogaps,              {.i = -1 } },
+	{ MODKEY|ALTKEY,              XK_6,          incrihgaps,             {.i = +1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_6,          incrihgaps,             {.i = -1 } },
+	{ MODKEY|ALTKEY,              XK_7,          incrivgaps,             {.i = +1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_7,          incrivgaps,             {.i = -1 } },
+	{ MODKEY|ALTKEY,              XK_8,          incrohgaps,             {.i = +1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_8,          incrohgaps,             {.i = -1 } },
+	{ MODKEY|ALTKEY,              XK_9,          incrovgaps,             {.i = +1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_9,          incrovgaps,             {.i = -1 } },
+	{ MODKEY|ALTKEY,              XK_0,          togglegaps,             {0} },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_0,          defaultgaps,            {0} },
 	#endif // VANITYGAPS_PATCH
 	#if ALT_TAB_PATCH
 	{ Mod1Mask,                     XK_Tab,        alttabstart,            {0} },
@@ -1340,22 +1608,22 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_backslash,  shiftview,              { .i = +1 } },
 	#endif // SHIFTVIEW_PATCH
 	#if SHIFTVIEW_CLIENTS_PATCH
-	{ MODKEY|Mod4Mask,              XK_Tab,        shiftviewclients,       { .i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_backslash,  shiftviewclients,       { .i = +1 } },
+	{ MODKEY|ALTKEY,              XK_Tab,        shiftviewclients,       { .i = -1 } },
+	{ MODKEY|ALTKEY,              XK_backslash,  shiftviewclients,       { .i = +1 } },
 	#endif // SHIFTVIEW_CLIENTS_PATCH
 	#if SHIFTBOTH_PATCH
 	{ MODKEY|ControlMask,           XK_Left,       shiftboth,              { .i = -1 } }, // note keybinding conflict with focusadjacenttag tagandviewtoleft placedir
 	{ MODKEY|ControlMask,           XK_Right,      shiftboth,              { .i = +1 } }, // note keybinding conflict with focusadjacenttag tagandviewtoright placedir
 	#endif // SHIFTBOTH_PATCH
 	#if SHIFTSWAPTAGS_PATCH && SWAPTAGS_PATCH
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_Left,       shiftswaptags,          { .i = -1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_Right,      shiftswaptags,          { .i = +1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_Left,       shiftswaptags,          { .i = -1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_Right,      shiftswaptags,          { .i = +1 } },
 	#endif // SHIFTSWAPTAGS_PATCH
 	#if BAR_WINTITLEACTIONS_PATCH
 	{ MODKEY|ControlMask,           XK_z,          showhideclient,         {0} },
 	{ MODKEY|ControlMask,           XK_s,          unhideall,              {0} },
 	#endif // BAR_WINTITLEACTIONS_PATCH
-	{ MODKEY|ShiftMask,             XK_c,          killclient,             {0} },
+	{ MODKEY,             			XK_q,          killclient,             {0} },//renzo edit, was { MODKEY|ShiftMask,             XK_c,          killclient,             {0} },
 	#if KILLUNSEL_PATCH
 	{ MODKEY|ShiftMask,             XK_x,          killunsel,              {0} },
 	#endif // KILLUNSEL_PATCH
@@ -1364,7 +1632,7 @@ static const Key keys[] = {
 	#endif // SELFRESTART_PATCH
 	{ MODKEY|ShiftMask,             XK_q,          quit,                   {0} },
 	#if RESTARTSIG_PATCH
-	{ MODKEY|ControlMask|ShiftMask, XK_q,          quit,                   {1} },
+	{ MODKEY|ControlMask|ShiftMask, XK_r,          quit,                   {1} },
 	#endif // RESTARTSIG_PATCH
 	#if FOCUSURGENT_PATCH
 	{ MODKEY,                       XK_u,          focusurgent,            {0} },
@@ -1397,9 +1665,6 @@ static const Key keys[] = {
 	#endif // FLEXTILE_DELUXE_LAYOUT
 	{ MODKEY,                       XK_space,      setlayout,              {0} },
 	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
-	#if ALWAYSONTOP_PATCH
-	{ MODKEY|ShiftMask,             XK_space,      togglealwaysontop,      {0} },
-	#endif // ALWAYSONTOP_PATCH
 	#if MAXIMIZE_PATCH
 	{ MODKEY|ControlMask|ShiftMask, XK_h,          togglehorizontalmax,    {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_l,          togglehorizontalmax,    {0} },
@@ -1420,7 +1685,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_grave,      removescratch,          {.ui = 0 } },
 	#endif // SCRATCHPADS_PATCH | RENAMED_SCRATCHPADS_PATCH
 	#if UNFLOATVISIBLE_PATCH
-	{ MODKEY|Mod4Mask,              XK_space,      unfloatvisible,         {0} },
+	{ MODKEY|ALTKEY,              XK_space,      unfloatvisible,         {0} },
 	{ MODKEY|ShiftMask,             XK_t,          unfloatvisible,         {.v = &layouts[0]} },
 	#endif // UNFLOATVISIBLE_PATCH
 	#if TOGGLEFULLSCREEN_PATCH
@@ -1451,16 +1716,16 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,                 {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,                 {.i = +1 } },
 	#if FOCUSADJACENTTAG_PATCH
-	{ MODKEY,                       XK_Left,       viewtoleft,             {0} }, // note keybinding conflict with focusdir
-	{ MODKEY,                       XK_Right,      viewtoright,            {0} }, // note keybinding conflict with focusdir
+	{ MODKEY|ALTKEY,                XK_Left,       viewtoleft,             {0} }, // note keybinding conflict with focusdir
+	{ MODKEY|ALTKEY,                XK_Right,      viewtoright,            {0} }, // note keybinding conflict with focusdir
 	{ MODKEY|ShiftMask,             XK_Left,       tagtoleft,              {0} }, // note keybinding conflict with shifttag
 	{ MODKEY|ShiftMask,             XK_Right,      tagtoright,             {0} }, // note keybinding conflict with shifttag
 	{ MODKEY|ControlMask,           XK_Left,       tagandviewtoleft,       {0} }, // note keybinding conflict with placedir
 	{ MODKEY|ControlMask,           XK_Right,      tagandviewtoright,      {0} }, // note keybinding conflict with placedir
 	#endif // FOCUSADJACENTTAG_PATCH
 	#if FOCUSADJACENTTAG_PATCH && FOCUSADJACENTTAG_CIRCULAR_RENBEN_PATCH && FOCUSADJACENTTAG_ACTIVE_CIRCULAR_RENBEN_PATCH
-	{ MODKEY|ALTKEY,                XK_Left,       viewtoleft_active,      {0} }, // note keybinding conflict with focusdir
-	{ MODKEY|ALTKEY,                XK_Right,      viewtoright_active,     {0} }, // note keybinding conflict with focusdir
+	{ MODKEY,		                XK_Left,       viewtoleft_active,      {0} }, // note keybinding conflict with focusdir
+	{ MODKEY,       		        XK_Right,      viewtoright_active,     {0} }, // note keybinding conflict with focusdir
 	#endif // FOCUSADJACENTTAG_PATCH && FOCUSADJACENTTAG_CIRCULAR_RENBEN_PATCH && FOCUSADJACENTTAG_ACTIVE_CIRCULAR_RENBEN_PATCH
 	#if TAGALL_PATCH
 	{ MODKEY|ShiftMask,             XK_F1,         tagall,                 {.v = "F1"} },
@@ -1483,12 +1748,12 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask,           XK_F9,         tagall,                 {.v = "9"} },
 	#endif // TAGALL_PATCH
 	#if TAGALLMON_PATCH
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_comma,      tagallmon,              {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_period,     tagallmon,              {.i = -1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_comma,      tagallmon,              {.i = +1 } },
+	{ MODKEY|ALTKEY|ShiftMask,    XK_period,     tagallmon,              {.i = -1 } },
 	#endif // TAGALLMON_PATCH
 	#if TAGSWAPMON_PATCH
-	{ MODKEY|Mod4Mask|ControlMask,  XK_comma,      tagswapmon,             {.i = +1 } },
-	{ MODKEY|Mod4Mask|ControlMask,  XK_period,     tagswapmon,             {.i = -1 } },
+	{ MODKEY|ALTKEY|ControlMask,  XK_comma,      tagswapmon,             {.i = +1 } },
+	{ MODKEY|ALTKEY|ControlMask,  XK_period,     tagswapmon,             {.i = -1 } },
 	#endif // TAGSWAPMON_PATCH
 
 	#if BAR_TAG_MULTI_ICONS_RENBEN_PATCH
@@ -1500,21 +1765,17 @@ static const Key keys[] = {
 	#elif BAR_ALTERNATIVE_TAGS_PATCH
 	{ MODKEY,                       XK_n,          togglealttag,           {0} },
 	#endif // BAR_ALTERNATIVE_TAGS_PATCH
-
-	#endif // NAMETAG_PATCH
+	
 	#if BAR_TAGGRID_PATCH
 	{ MODKEY|ControlMask,           XK_Up,         switchtag,              { .ui = SWITCHTAG_UP    | SWITCHTAG_VIEW } },
 	{ MODKEY|ControlMask,           XK_Down,       switchtag,              { .ui = SWITCHTAG_DOWN  | SWITCHTAG_VIEW } },
 	{ MODKEY|ControlMask,           XK_Right,      switchtag,              { .ui = SWITCHTAG_RIGHT | SWITCHTAG_VIEW } }, // note keybinding conflict with placedir
 	{ MODKEY|ControlMask,           XK_Left,       switchtag,              { .ui = SWITCHTAG_LEFT  | SWITCHTAG_VIEW } }, // note keybinding conflict with placedir
-	{ MODKEY|Mod4Mask,              XK_Up,         switchtag,              { .ui = SWITCHTAG_UP    | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-	{ MODKEY|Mod4Mask,              XK_Down,       switchtag,              { .ui = SWITCHTAG_DOWN  | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-	{ MODKEY|Mod4Mask,              XK_Right,      switchtag,              { .ui = SWITCHTAG_RIGHT | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
-	{ MODKEY|Mod4Mask,              XK_Left,       switchtag,              { .ui = SWITCHTAG_LEFT  | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+	{ MODKEY|ALTKEY,              XK_Up,         switchtag,              { .ui = SWITCHTAG_UP    | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+	{ MODKEY|ALTKEY,              XK_Down,       switchtag,              { .ui = SWITCHTAG_DOWN  | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+	{ MODKEY|ALTKEY,              XK_Right,      switchtag,              { .ui = SWITCHTAG_RIGHT | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
+	{ MODKEY|ALTKEY,              XK_Left,       switchtag,              { .ui = SWITCHTAG_LEFT  | SWITCHTAG_TAG | SWITCHTAG_VIEW } },
 	#endif // BAR_TAGGRID_PATCH
-	#if MOVECENTER_PATCH
-	{ MODKEY,                       XK_x,          movecenter,             {0} }, // note keybinding conflict with killunsel
-	#endif // MOVECENTER_PATCH
 	#if MOVEPLACE_PATCH
 	{ MODKEY,                       XK_KP_7,       moveplace,              {.ui = WIN_NW }},   /* XK_KP_Home,  */
 	{ MODKEY,                       XK_KP_8,       moveplace,              {.ui = WIN_N  }},   /* XK_KP_Up,    */
@@ -1610,6 +1871,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_F2,         mpdchange,              {.i = +1} },
 	{ MODKEY,                       XK_Escape,     mpdcontrol,             {0} },
 	#endif // MPDCONTROL_PATCH
+	
 	TAGKEYS(                        XK_1,                                  0)
 	TAGKEYS(                        XK_2,                                  1)
 	TAGKEYS(                        XK_3,                                  2)
@@ -1619,6 +1881,14 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                                  6)
 	TAGKEYS(                        XK_8,                                  7)
 	TAGKEYS(                        XK_9,                                  8)
+
+	//START renzo volume brightess manual patch
+	{ 0,              	XF86XK_AudioLowerVolume, 	spawn, 					{.v = downvol } },
+	{ 0,               	XF86XK_AudioMute, 			spawn, 					{.v = mutevol } },
+	{ 0,              	XF86XK_AudioRaiseVolume, 	spawn, 					{.v = upvol   } },
+	{ 0,				XF86XK_MonBrightnessUp,		spawn,					{.v = light_up} },
+	{ 0,				XF86XK_MonBrightnessDown,	spawn,					{.v = light_down} },
+	//END renzo volume brightness manual patch
 };
 
 #if KEYMODES_PATCH
@@ -1751,8 +2021,8 @@ static const Signal signals[] = {
 	{ "tagandviewtoright",       tagandviewtoright },
 	#endif // FOCUSADJACENTTAG_PATCH
 	#if FOCUSADJACENTTAG_PATCH && FOCUSADJACENTTAG_CIRCULAR_RENBEN_PATCH && FOCUSADJACENTTAG_ACTIVE_CIRCULAR_RENBEN_PATCH
-	{ "viewtoleft_active",       viewtoleft_active },
-	{ "viewtoright_active",      viewtoright_active },
+	{ "viewtoleft_active",              viewtoleft_ },
+	{ "viewtoright_active",             viewtoright },
 	#endif // FOCUSADJACENTTAG_PATCH && FOCUSADJACENTTAG_CIRCULAR_RENBEN_PATCH && FOCUSADJACENTTAG_ACTIVE_CIRCULAR_RENBEN_PATCH
 	#if SWAPFOCUS_PATCH && PERTAG_PATCH
 	{ "swapfocus",               swapfocus },
@@ -1779,9 +2049,6 @@ static const Signal signals[] = {
 	#if CFACTS_PATCH
 	{ "setcfact",                setcfact },
 	#endif // CFACTS_PATCH
-	#if MOVECENTER_PATCH
-	{ "movecenter",              movecenter },
-	#endif // MOVECENTER_PATCH
 	#if MOVEPLACE_PATCH
 	{ "moveplace",               moveplace },
 	#endif // MOVEPLACE_PATCH
@@ -2019,9 +2286,6 @@ static IPCCommand ipccommands[] = {
 	IPCCOMMAND( mpdchange, 1, {ARG_TYPE_SINT} ),
 	IPCCOMMAND( mpdcontrol, 1, {ARG_TYPE_NONE} ),
 	#endif // MPDCONTROL_PATCH
-	#if MOVECENTER_PATCH
-	IPCCOMMAND( movecenter, 1, {ARG_TYPE_NONE} ),
-	#endif // MOVECENTER_PATCH
 	#if MOVEPLACE_PATCH
 	IPCCOMMAND( moveplace, 1, {ARG_TYPE_UINT} ),
 	#endif // MOVEPLACE_PATCH
