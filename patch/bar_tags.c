@@ -135,13 +135,8 @@ draw_tags(Bar *bar, BarArg *a)
 			}
 		#elif BAR_UNDERLINETAGS_PATCH
 		if (ulineall || m->tagset[m->seltags] & 1 << i)
-<<<<<<< HEAD
-			drw_rect(drw, x + ulinepad, a->y + bh - ulinestroke - ulinevoffset, w - (ulinepad * 2), ulinestroke, 1, 0);
-		#endif // BAR_UNDERLINETAGS_PATCH
-=======
 			drw_rect(drw, x + ulinepad, bh - ulinestroke - ulinevoffset, w - (ulinepad * 2), ulinestroke, 1, 0);
 		#endif // BAR_UNDERLINETAGS_PATCH //BAR_PER_TAG_COLOR_RENBEN_PATCH
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 		x += w;
 	}
 

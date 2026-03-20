@@ -66,14 +66,10 @@ IMLIB2LIBS = -lImlib2 #renzo uncommented, was commented
 
 # start: renzo: to account for modern library locations, also included -I. to help clangd or intellisense detection
 # includes and libs
-<<<<<<< HEAD
-INCS = -I${X11INC} -I${FREETYPEINC} ${YAJLINC} ${PANGOINC} ${BDINC}
-LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}  ${XRENDER} ${MPDCLIENT} ${XEXTLIB} ${XCBLIBS} ${KVMLIB} ${PANGOLIB} ${YAJLLIBS} ${IMLIB2LIBS} $(BDLIBS) $(XILIB)
-=======
-INCS = -I. -I${X11INC} -I${X11INC_FALLBACK} -I${FREETYPEINC} ${YAJLINC} ${PANGOINC} ${BDINC}
-LIBS = -L${X11LIB} -L${X11LIB_FALLBACK} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}  ${XRENDER} ${MPDCLIENT} ${XEXTLIB} ${XCBLIBS} ${KVMLIB} ${PANGOLIB} ${YAJLLIBS} ${IMLIB2LIBS} $(BDLIBS)
+
+INCS = -I. -Ipatch -I${X11INC} -I${X11INC_FALLBACK} -I${FREETYPEINC} ${YAJLINC} ${PANGOINC} ${BDINC}
+LIBS = -L${X11LIB} -L${X11LIB_FALLBACK} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}  ${XRENDER} ${MPDCLIENT} ${XEXTLIB} ${XCBLIBS} ${KVMLIB} ${PANGOLIB} ${YAJLLIBS} ${IMLIB2LIBS} $(BDLIBS) $(XILIB)
 # end: renzo: to account for modern library locations
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 
 # flags
 CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}

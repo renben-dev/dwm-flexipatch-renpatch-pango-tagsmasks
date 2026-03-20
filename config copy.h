@@ -8,7 +8,6 @@
 #include <X11/XF86keysym.h>
 /*end*/
 
-
 /* start: added color palette Renzo 2025.06.22 */
 #define SL_RED_STR       "#E6194B"  // #E6194B
 #define SL_YELLOW_STR    "#E8CF2A"  // #E8CF2A
@@ -981,16 +980,6 @@ static const int nstack      = 0;    /* number of clients in primary stack area 
 #endif // FLEXTILE_DELUXE_LAYOUT
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
-static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
-#if PLACEMOUSE_PATCH
-static const int refreshrate_placemouse = 60; /* refresh rate (per second) for placemouse */
-#endif // PLACEMOUSE_PATCH
-#if DRAGMFACT_PATCH
-static const int refreshrate_dragmfact = 40; /* refresh rate (per second) for dragmfact */
-#endif // DRAGMFACT_PATCH
-#if DRAGCFACT_PATCH
-static const int refreshrate_dragcfact = 60; /* refresh rate (per second) for dragcfact */
-#endif // DRAGCFACT_PATCH
 #if DECORATION_HINTS_PATCH
 static const int decorhints  = 1;    /* 1 means respect decoration hints */
 #endif // DECORATION_HINTS_PATCH
@@ -1200,8 +1189,8 @@ static const char *xkb_layouts[]  = {
 
 #if STACKER_PATCH
 #define STACKKEYS(MOD,ACTION) \
-	{ MOD, XK_h,     ACTION##stack, {.i = INC(+1) } }, \ // renzo: changed from XK_j
-	{ MOD, XK_l,     ACTION##stack, {.i = INC(-1) } }, \ // renzo: changed from XK_k
+	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
+	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
 	{ MOD, XK_s,     ACTION##stack, {.i = PREVSEL } }, \
 	{ MOD, XK_w,     ACTION##stack, {.i = 0 } }, \
 	{ MOD, XK_e,     ACTION##stack, {.i = 1 } }, \
@@ -1542,8 +1531,8 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask,           XK_i,          incnstack,              {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_u,          incnstack,              {.i = -1 } },
 	#endif // FLEXTILE_DELUXE_LAYOUT
-	{ MODKEY|ControlMask,           XK_h,          setmfact,               {.f = -0.02} }, // renzo changed from: { MODKEY,                       XK_h,          setmfact,               {.f = -0.02} },
-	{ MODKEY|ControlMask,           XK_l,          setmfact,               {.f = +0.02} }, // renzo changed: { MODKEY,                       XK_l,          setmfact,               {.f = +0.02} },
+	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.02} },
+	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.02} },
 	#if CFACTS_PATCH
 	{ MODKEY|ShiftMask,             XK_h,          setcfact,               {.f = +0.25} },
 	{ MODKEY|ShiftMask,             XK_l,          setcfact,               {.f = -0.25} },

@@ -361,14 +361,7 @@ struct Client {
 	#endif // ALWAYSONTOP_PATCH
 	#if !FAKEFULLSCREEN_PATCH && FAKEFULLSCREEN_CLIENT_PATCH
 	int fakefullscreen;
-<<<<<<< HEAD
-	#endif // FAKEFULLSCREEN_CLIENT_PATCH
-	#if GAMES_PATCH
-	int isgame;
-	#endif // GAMES_PATCH
-=======
 	#endif 
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 	#if EXRESIZE_PATCH
 	unsigned char expandmask;
 	int expandx1, expandy1, expandx2, expandy2;
@@ -580,14 +573,7 @@ typedef struct {
 	#endif 
 	#if BORDER_RULE_PATCH
 	int bw;
-<<<<<<< HEAD
-	#endif // BORDER_RULE_PATCH
-	#if GAMES_PATCH
-	int isgame;
-	#endif // GAMES_PATCH
-=======
 	#endif 
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 } Rule;
 #if BORDER_RULE_PATCH && XKB_PATCH
 #define RULE(...) { .monitor = -1, .xkb_layout = -1, .bw = -1, __VA_ARGS__ },
@@ -932,14 +918,7 @@ applyrules(Client *c)
 			#endif 
 			#if SELECTIVEFAKEFULLSCREEN_PATCH && FAKEFULLSCREEN_CLIENT_PATCH && !FAKEFULLSCREEN_PATCH
 			c->fakefullscreen = r->isfakefullscreen;
-<<<<<<< HEAD
-			#endif // SELECTIVEFAKEFULLSCREEN_PATCH
-			#if GAMES_PATCH
-			c->isgame = r->isgame;
-			#endif // GAMES_PATCH
-=======
 			#endif 
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 			#if SWALLOW_PATCH
 			c->isterminal = r->isterminal;
 			c->noswallow = r->noswallow;
@@ -1179,31 +1158,6 @@ buttonpress(XEvent *e)
 		selmon = m;
 		focus(NULL);
 	}
-<<<<<<< HEAD
-
-	#if BANISH_PATCH
-	c = wintoclient(ev->window);
-
-	if (!c && cursor_hidden) {
-		c = recttoclient(mouse_x, mouse_y, 1, 1, 1);
-		showcursor(NULL);
-	}
-
-	if (c) {
-		#if FOCUSONCLICK_PATCH
-		if (focusonwheel || (ev->button != Button4 && ev->button != Button5))
-			focus(c);
-		#else
-		focus(c);
-		restack(selmon);
-		#endif // FOCUSONCLICK_PATCH
-		XAllowEvents(dpy, ReplayPointer, CurrentTime);
-		click = ClkClientWin;
-	}
-	#endif // BANISH_PATCH
-
-=======
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 	for (bar = selmon->bar; bar; bar = bar->next) {
 		if (ev->window == bar->win) {
 			for (r = 0; r < LENGTH(barrules); r++) {
@@ -1244,13 +1198,7 @@ buttonpress(XEvent *e)
 			arg.ui = i;
 		}
 	}
-<<<<<<< HEAD
-	#endif // TAB_PATCH
-
-	#if !BANISH_PATCH
-=======
 	#endif 
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 	if (click == ClkRootWin && (c = wintoclient(ev->window))) {
 		#if FOCUSONCLICK_PATCH
 		if (focusonwheel || (ev->button != Button4 && ev->button != Button5))
@@ -1262,11 +1210,6 @@ buttonpress(XEvent *e)
 		XAllowEvents(dpy, ReplayPointer, CurrentTime);
 		click = ClkClientWin;
 	}
-<<<<<<< HEAD
-	#endif // BANISH_PATCH
-
-=======
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 	for (i = 0; i < LENGTH(buttons); i++) {
 		if (click == buttons[i].click && buttons[i].func && buttons[i].button == ev->button
 				&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state)) {
@@ -2062,15 +2005,6 @@ enternotify(XEvent *e)
 	#endif 
 	Monitor *m;
 	XCrossingEvent *ev = &e->xcrossing;
-<<<<<<< HEAD
-
-	#if BANISH_PATCH
-	if (cursor_hidden)
-		return;
-	#endif // BANISH_PATCH
-
-=======
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 	if ((ev->mode != NotifyNormal || ev->detail == NotifyInferior) && ev->window != root)
 		return;
 	c = wintoclient(ev->window);
@@ -2260,13 +2194,8 @@ getatomprop(Client *c, Atom prop, Atom req)
 			atom = *(long *)p;
 		#if BAR_SYSTRAY_PATCH
 		if (da == xatom[XembedInfo] && dl == 2)
-<<<<<<< HEAD
-			atom = ((long *)p)[1];
-		#endif // BAR_SYSTRAY_PATCH
-=======
 			atom = ((Atom *)p)[1];
 		#endif 
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 		XFree(p);
 	}
 	return atom;
@@ -2277,18 +2206,6 @@ getrootptr(int *x, int *y)
 	int di;
 	unsigned int dui;
 	Window dummy;
-<<<<<<< HEAD
-
-	#if BANISH_PATCH
-	if (cursor_hidden) {
-		*x = mouse_x;
-		*y = mouse_y;
-		return 1;
-	}
-	#endif // BANISH_PATCH
-
-=======
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 	return XQueryPointer(dpy, root, &dummy, &dummy, x, y, &di, &di, &dui);
 }
 long
@@ -3200,15 +3117,7 @@ restack(Monitor *m)
 	XWindowChanges wc;
 	#if WARP_PATCH && FLEXTILE_DELUXE_LAYOUT
 	int n;
-<<<<<<< HEAD
-	#endif // WARP_PATCH
-	#if ALWAYSONTOP_PATCH
-	Monitor *mon;
-	#endif // ALWAYSONTOP_PATCH
-
-=======
 	#endif 
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 	drawbar(m);
 	#if TAB_PATCH
 	drawtab(m);
@@ -3929,32 +3838,7 @@ setup(void)
 	                      XkbAllStateComponentsMask, XkbGroupStateMask);
 	XkbGetState(dpy, XkbUseCoreKbd, &xkbstate);
 	xkbGlobal.group = xkbstate.locked_group;
-<<<<<<< HEAD
-	#endif // XKB_PATCH
-
-	#if BANISH_PATCH
-	if (!XQueryExtension(dpy, "XInputExtension", &xi_opcode, &i, &i)) {
-		fprintf(stderr, "Warning: XInput is not available.");
-	}
-	/* Tell XInput to send us all RawMotion events. */
-	unsigned char mask_bytes[XIMaskLen(XI_LASTEVENT)];
-	memset(mask_bytes, 0, sizeof(mask_bytes));
-	XISetMask(mask_bytes, XI_RawMotion);
-	XISetMask(mask_bytes, XI_RawKeyRelease);
-	XISetMask(mask_bytes, XI_RawTouchBegin);
-	XISetMask(mask_bytes, XI_RawTouchEnd);
-	XISetMask(mask_bytes, XI_RawTouchUpdate);
-
-	XIEventMask mask;
-	mask.deviceid = XIAllMasterDevices;
-	mask.mask_len = sizeof(mask_bytes);
-	mask.mask = mask_bytes;
-	XISelectEvents(dpy, root, &mask, 1);
-	#endif // BANISH_PATCH
-
-=======
 	#endif 
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 	grabkeys();
 	focus(NULL);
 	#if IPC_PATCH
@@ -4282,17 +4166,7 @@ togglefloating(const Arg *arg)
 		c->sfy = c->y;
 		c->sfw = c->w;
 		c->sfh = c->h;
-<<<<<<< HEAD
-		#if ALWAYSONTOP_PATCH
-		c->alwaysontop = 0;
-		#endif // ALWAYSONTOP_PATCH
-	#elif ALWAYSONTOP_PATCH
-	} else {
-		c->alwaysontop = 0;
-	#endif // SAVEFLOATS_PATCH | EXRESIZE_PATCH | ALWAYSONTOP_PATCH
-=======
 	#endif 
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 	}
 	arrange(c->mon);
 	#if BAR_EWMHTAGS_PATCH
@@ -4427,19 +4301,7 @@ unfocus(Client *c, int setfocus, Client *nextfocus)
 
 	#if SWAPFOCUS_PATCH && PERTAG_PATCH
 	selmon->pertag->prevclient[selmon->pertag->curtag] = c;
-<<<<<<< HEAD
-	#endif // SWAPFOCUS_PATCH
-	#if GAMES_PATCH
-	if (c->isgame && c->isfullscreen) {
-		minimize(c);
-	}
-	#endif // GAMES_PATCH
-	#if GAMES_PATCH && LOSEFULLSCREEN_PATCH
-	else
-	#endif // GAMES_PATCH | LOSEFULLSCREEN_PATCH
-=======
 	#endif 
->>>>>>> 098ffab (Huge refactor: customized dwm-flexipatch extensively)
 	#if LOSEFULLSCREEN_PATCH
 	if (c->isfullscreen && ISVISIBLE(c) && c->mon == selmon && nextfocus && !nextfocus->isfloating) {
 		#if RENAMED_SCRATCHPADS_PATCH && RENAMED_SCRATCHPADS_AUTO_HIDE_PATCH

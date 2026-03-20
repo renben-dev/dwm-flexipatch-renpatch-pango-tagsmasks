@@ -1,7 +1,7 @@
 /* Bar functionality */
+#include "bar.c"
 #include "bar_indicators.c"
 #include "bar_tagicons.c"
-#include "bar.c"
 
 #if BAR_ALPHA_PATCH
 #include "bar_alpha.c"
@@ -116,7 +116,8 @@
 #if ASPECTRESIZE_PATCH
 #include "aspectresize.c"
 #endif
-#if ATTACHABOVE_PATCH || ATTACHASIDE_PATCH || ATTACHBELOW_PATCH || ATTACHBOTTOM_PATCH || SEAMLESS_RESTART_PATCH
+#if ATTACHABOVE_PATCH || ATTACHASIDE_PATCH || ATTACHBELOW_PATCH ||             \
+    ATTACHBOTTOM_PATCH || SEAMLESS_RESTART_PATCH
 #include "attachx.c"
 #endif
 #if AUTOSTART_PATCH
@@ -191,9 +192,9 @@
 #include "ipc.c"
 #ifdef VERSION
 #include "ipc/IPCClient.c"
-#include "ipc/yajl_dumps.c"
 #include "ipc/ipc.c"
 #include "ipc/util.c"
+#include "ipc/yajl_dumps.c"
 #endif
 #endif // IPC_PATCH
 #if INSETS_PATCH
@@ -269,7 +270,8 @@
 #if SETBORDERPX_PATCH
 #include "setborderpx.c"
 #endif
-#if SHIFTBOTH_PATCH || SHIFTSWAPTAGS_PATCH || SHIFTTAG_PATCH || SHIFTTAGCLIENTS_PATCH || SHIFTVIEW_PATCH || SHIFTVIEW_CLIENTS_PATCH
+#if SHIFTBOTH_PATCH || SHIFTSWAPTAGS_PATCH || SHIFTTAG_PATCH ||                \
+    SHIFTTAGCLIENTS_PATCH || SHIFTVIEW_PATCH || SHIFTVIEW_CLIENTS_PATCH
 #include "shift.c"
 #endif
 #if SHIFTBOTH_PATCH
@@ -376,7 +378,9 @@
 #include "seamless_restart.c"
 #endif
 /* Layouts */
-#if BSTACK_LAYOUT || BSTACKHORIZ_LAYOUT || CENTEREDMASTER_LAYOUT || CENTEREDFLOATINGMASTER_LAYOUT || COLUMNS_LAYOUT || DECK_LAYOUT || TILE_LAYOUT
+#if BSTACK_LAYOUT || BSTACKHORIZ_LAYOUT || CENTEREDMASTER_LAYOUT ||            \
+    CENTEREDFLOATINGMASTER_LAYOUT || COLUMNS_LAYOUT || DECK_LAYOUT ||          \
+    TILE_LAYOUT
 #include "layout_facts.c"
 #endif
 #if BSTACK_LAYOUT
@@ -424,5 +428,3 @@
 #if BAR_TAG_NUM_CLIENTS_INDICATOR_RENBEN_PATCH
 #include "bar_number_of_clients_indicator.c"
 #endif
-
-
